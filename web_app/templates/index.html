@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/styles.css' %}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY" defer></script>
-    <script src="{% static 'web_app/js/scripts.js' %}script" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk" defer></script>
+    <script src="{% static 'web_app/js/maps.js' %}" defer></script>
+    <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
 <body>
     <header>
@@ -22,8 +23,8 @@
         <section id="search-section">
             <h2>Search Restaurants</h2>
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search by name, cuisine, or location">
-                <button id="searchButton" class="btn">Search</button>
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="searchButton" class="btn" onclick="searchRestaurants()">Search</button>
             </div>
             <div class="filters">
                 <select id="ratingFilter">
@@ -42,7 +43,7 @@
         </section>
 
         <section id="map-section">
-            <div id="map"></div>
+            <div id="map" style="height: 500px; width: 100%;"></div>
         </section>
 
         <section id="results-section">
