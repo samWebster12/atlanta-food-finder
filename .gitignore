@@ -1,0 +1,5 @@
+myenv
+db.sqlite3
+atl_food_finder/__pycache__
+web_app/__pycache__
+web_app/migrations/__pycache__
