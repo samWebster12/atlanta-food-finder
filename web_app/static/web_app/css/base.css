@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('../images/restaurant.png'); /* Replace with your image path */
+    background-size: 250%;
+    background-position: 45% 55%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Header styling */
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #5e657bd0; /* Slightly transparent white */
+    font-size: 30px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    font-style: italic;
+}
+
+/* Text in the middle of the page */
+.content {
+    font-size: 40px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    font-weight: bold;
+    text-align: left;
+    margin-top: -20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Oval button styling */
+.button {
+    display: inline-block;
+    padding: 20px 55px;
+    font-size: 20px;
+    font-weight: lighter;
+    font-family: 'Literata', serif;
+    color: #fcf3e3;
+    background-color: #5e657bd0;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
