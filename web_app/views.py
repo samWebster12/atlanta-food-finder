@@ -7,7 +7,7 @@ def index(request):
 
 
 def search_restaurants(request):
-    print("receievd request")
+    print("received request")
     query = request.GET.get('query', '')
     # You'll need to set up your API key in your Django settings
     api_key = 'AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk'
@@ -30,6 +30,7 @@ def search_restaurants(request):
             'name': result['name'],
             'lat': result['geometry']['location']['lat'],
             'lng': result['geometry']['location']['lng'],
+            'rating': result.get('rating', 0)
         })
     
     return JsonResponse({'restaurants': restaurants})

@@ -1,5 +1,6 @@
 let map;
 let markers = [];
+let userLocation;
 
 function initMap() {
     const atlanta = { lat: 33.7490, lng: -84.3880 };
@@ -27,12 +28,12 @@ function initMap() {
     }
 }
 
-
-
 function searchRestaurants() {
     const query = document.getElementById('search-input').value;
     const maxDistanceMiles = document.getElementById('distanceFilter').value; // Get distance in miles
     const maxDistance = maxDistanceMiles ? maxDistanceMiles * 1.60934 : Infinity; // Convert to kilometers
+    const minRating = parseFloat(document.getElementById('ratingFilter').value) || 0;
+
 
     if (!userLocation) {
         alert("User location not available.");
@@ -44,7 +45,7 @@ function searchRestaurants() {
         .then(response => response.json())
         .then(data => {
             clearMarkers();
-            console.log("DATA: ", data)
+            console.log("DATA BEFORE FILTERS: ", data)
             const filteredRestaurants = data.restaurants.filter(restaurant => {
                 const distance = calculateDistance(
                     userLocation.lat,
@@ -52,12 +53,15 @@ function searchRestaurants() {
                     restaurant.lat,
                     restaurant.lng
                 );
-                return distance <= maxDistance; 
+                
+                // Check if rating is present and valid
+                const rating = parseFloat(restaurant.rating) || 0; // Ensure rating is a number
+                return distance <= maxDistance && rating >= minRating; 
             });
-
             filteredRestaurants.forEach(restaurant => {
                 addMarker(restaurant);
             });
+            console.log("DATA AFTER FILTERS: ", filteredRestaurants);
         });
 }
 
