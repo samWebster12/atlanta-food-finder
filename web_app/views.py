@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.conf import settings
 from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 import requests
 import json
 
@@ -8,12 +10,10 @@ USE_DUMMY_DATA = True
 def index(request):
     return render(request, 'map.html')
 
-
+@require_GET
 def search_restaurants(request):
     if USE_DUMMY_DATA == False:
         query = request.GET.get('query', '')
-        # You'll need to set up your API key in your Django settings
-        api_key = 'AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk'
 
         url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         params = {
@@ -21,7 +21,7 @@ def search_restaurants(request):
             'radius': '24140.16',  # Search within 15 miles
             'type': 'restaurant',
             'keyword': query,
-            'key': api_key
+            'key': settings.GOOGLE_MAPS_API_KEY
         }
         
         response = requests.get(url, params=params)
@@ -53,3 +53,23 @@ def search_restaurants(request):
             })
         
         return JsonResponse({'restaurants': restaurants})
+
+@require_GET
+def get_place_details(request):
+    place_id = request.GET.get('place_id')
+    if not place_id:
+        return JsonResponse({'error': 'place_id is required'}, status=400)
+
+    api_key = settings.GOOGLE_MAPS_API_KEY
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
+
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == 'OK':
+            return JsonResponse(data['result'])
+        else:
+            return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
+    else:
+        return JsonResponse({'error': 'API request failed'}, status=response.status_code)

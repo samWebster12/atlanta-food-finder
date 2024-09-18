@@ -28,6 +28,31 @@ function initMap() {
     }
 }
 
+function getPlaceDetails(placeId) {
+    // Construct the URL for your Django endpoint
+    const url = `/api/place-details/?place_id=${encodeURIComponent(placeId)}`;
+
+    // Make the fetch request
+    return fetch(url)
+        .then(response => {
+            // Check if the response is ok (status in the range 200-299)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            print("Place Details:", data);
+            // Return the data in case you want to use it further
+            return data;
+        })
+        .catch(error => {
+            console.error('Error fetching place details:', error);
+            return [];
+        });
+}
+
+
 function searchRestaurants() {
     const query = document.getElementById('search-input').value;
     const maxDistanceMiles = document.getElementById('distanceFilter').value; // Get distance in miles
