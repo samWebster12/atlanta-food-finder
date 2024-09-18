@@ -18,7 +18,7 @@ def search_restaurants(request):
         url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         params = {
             'location': '33.7490,-84.3880',  # Coordinates for Atlanta
-            'radius': '5000',  # Search within 5km
+            'radius': '24140.16',  # Search within 15 miles
             'type': 'restaurant',
             'keyword': query,
             'key': api_key
@@ -34,6 +34,7 @@ def search_restaurants(request):
                 'name': result['name'],
                 'lat': result['geometry']['location']['lat'],
                 'lng': result['geometry']['location']['lng'],
+                'rating': result.get('rating', 0)
             })
         
         return JsonResponse({'restaurants': restaurants})
