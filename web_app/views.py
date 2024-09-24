@@ -18,9 +18,9 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({True})
+            return JsonResponse({'Success': True})
         else:
-            return JsonResponse({False})
+            return JsonResponse({'Success': False})
     return render(request, 'index.html', {'action', 'login'})
 @csrf_exempt
 def logout(request):
@@ -37,9 +37,9 @@ def signup(request):
         try:
             user = User.objects.create_user(username, email, password) #Make User model
             login(request, user)
-            return JsonResponse({True})
+            return JsonResponse({'Success': True})
         except:
-            return JsonResponse({False})
+            return JsonResponse({'Success': False})
     return render(request, 'index.html', {'action', 'signup'})
 def search_restaurants(request):
     query = request.GET.get('query', '')

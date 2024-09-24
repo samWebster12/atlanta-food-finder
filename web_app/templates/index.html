@@ -13,10 +13,13 @@
     <header>
         AtlantaFoodFinder
         {% if user.is_authenticated %}
-            Welcome, {{ user.username }}! <button id="logoutButton">Logout</button>
+            Welcome, {{ user.username }}!
+        <form action = "{% url 'logout' %}" method = "post">
+            {% csrf_token %}
+            <button type = 'submit'>Log Out</button>
+        </form>
         {% else %}
-            <button id="loginButton">Login</button>
-            <button id="signupButton">Sign Up</button>
+            <a href = "{% url 'login' %}">Log In</a>
         {% endif %}
     </header>
 
@@ -32,11 +35,9 @@
     {% if not user.is_authenticated %}
         <div id="authForm" style="display: none;">
             <h2 id="authTitle"></h2>
-            <form id="authFormElement">
-                <input type="hidden" id="authAction" name="action" value="">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="email" id="email" name="email" placeholder="Email" style="display: none;" required>
+            <form method = "post" id="authFormElement">
+                    {% csrf_token %}
+                    {{ form }}
                 <button type="submit">Submit</button>
             </form>
             <p id="authError"></p>
