@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image: url('../images/restaurant.png');
     background-size: 250%;
     background-position: 45% 55%;
     font-family: Arial, sans-serif;
@@ -18,7 +17,6 @@ header {
     width: 100%;
     text-align: center;
     padding: 20px;
-    background-color: #5e657bd0;
     font-size: 30px;
     color: #fcf3e3;
     font-family: 'Literata', serif;

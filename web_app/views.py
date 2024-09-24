@@ -1,13 +1,18 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import json
 import requests
+USE_DUMMY_DATA = True
+
 
 def index(request):
     return render(request, 'index.html')
+
 
 @csrf_exempt
 def login(request):
@@ -22,10 +27,13 @@ def login(request):
         else:
             return JsonResponse({'Success': False})
     return render(request, 'index.html', {'action', 'login'})
+
+
 @csrf_exempt
 def logout(request):
     logout(request)
     return JsonResponse({True})
+
 
 @csrf_exempt
 def signup(request):
@@ -35,50 +43,74 @@ def signup(request):
         password = data['password']
         email = data['email']
         try:
-            user = User.objects.create_user(username, email, password) #Make User model
+            user = User.objects.create_user(username, email, password)  # Make User model
             login(request, user)
             return JsonResponse({'Success': True})
         except:
             return JsonResponse({'Success': False})
     return render(request, 'index.html', {'action', 'signup'})
+
+
+@require_GET
 def search_restaurants(request):
-    query = request.GET.get('query', '')
-    # You'll need to set up your API key in your Django settings
-    api_key = 'AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk'
-    url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-    params = {
-        'location': '33.7490,-84.3880',  # Coordinates for Atlanta
-        'radius': '24140.16',  # Search within 15 miles
-        'type': 'restaurant',
-        'keyword': query,
-        'key': api_key
-    }
-    
-    response = requests.get(url, params=params)
-    results = response.json().get('results', [])
-    
-    restaurants = []
-    for result in results:
-        moreDetailsUrl = 'https://maps.googleapis.com/maps/api/place/details/json'
-        moreDetailsParams = {
-            'place-id': result['place-id'],
-            'fields': 'name,rating,address,phone_number,website,reviews, rating, opening_hours, closing_hours, price_level',
-            'key': api_key
+    if USE_DUMMY_DATA == False:
+        query = request.GET.get('query', '')
+
+        url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+        params = {
+            'location': '33.7490,-84.3880',  # Coordinates for Atlanta
+            'radius': '24140.16',  # Search within 15 miles
+            'type': 'restaurant',
+            'keyword': query,
+            'key': settings.GOOGLE_MAPS_API_KEY
         }
-        moreDetailsResponse = requests.get(moreDetailsUrl, params=moreDetailsParams)
-        moreDetails = moreDetailsResponse.json().get('results', [])
-        restaurants.append({
-            'name': moreDetails.get('name'),
-            'address': moreDetails.get('address'),
-            'phone': moreDetails.get('phone_number'),
-            'website': moreDetails.get('website'),
-            'reviews': moreDetails.get('reviews', [])[:3],
-            'rating': moreDetails.get('rating'),
-            'opening_hours': moreDetails.get('opening_hours', {}).get('text'),
-            'closing_hours': moreDetails.get('closing_hours', {}).get('text'),
-            'price_level': moreDetails.get('price_level'),
-            'lat': result['geometry']['location']['lat'],
-            'lng': result['geometry']['location']['lng'],
-        })
-    
-    return JsonResponse({'restaurants': restaurants})
+
+        response = requests.get(url, params=params)
+        results = response.json().get('results', [])
+
+        restaurants = []
+        for result in results:
+            restaurants.append({
+                'name': result['name'],
+                'lat': result['geometry']['location']['lat'],
+                'lng': result['geometry']['location']['lng'],
+                'rating': result.get('rating', 0)
+            })
+
+        return JsonResponse({'restaurants': restaurants})
+
+    else:
+        file_path = "dummy_maps_results.json"
+        with open(file_path, 'r') as json_file:
+            results = json.load(json_file)
+
+        restaurants = []
+        for result in results:
+            restaurants.append({
+                'name': result['name'],
+                'lat': result['geometry']['location']['lat'],
+                'lng': result['geometry']['location']['lng'],
+            })
+
+        return JsonResponse({'restaurants': restaurants})
+
+
+@require_GET
+def get_place_details(request):
+    place_id = request.GET.get('place_id')
+    if not place_id:
+        return JsonResponse({'error': 'place_id is required'}, status=400)
+
+    api_key = settings.GOOGLE_MAPS_API_KEY
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == 'OK':
+            return JsonResponse(data['result'])
+        else:
+            return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
+    else:
+        return JsonResponse({'error': 'API request failed'}, status=response.status_code)
