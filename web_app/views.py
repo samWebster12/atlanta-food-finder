@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import requests
 
@@ -34,3 +35,15 @@ def search_restaurants(request):
         })
     
     return JsonResponse({'restaurants': restaurants})
+
+def login_view(request):
+    return render(request, 'login.html')
+
+def ask_account(request):
+    return render(request, 'account.html')
+
+def create_account(request):
+    return render(request, 'acc-create.html')
+
+def back_home(request):
+    return render(request, 'index.html')

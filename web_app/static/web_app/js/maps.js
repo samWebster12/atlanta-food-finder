@@ -2,6 +2,14 @@ let map;
 let markers = [];
 let userLocation;
 
+
+var btn = document.getElementById("startButton");
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
 function initMap() {
     const atlanta = { lat: 33.7490, lng: -84.3880 };
     map = new google.maps.Map(document.getElementById("map"), {

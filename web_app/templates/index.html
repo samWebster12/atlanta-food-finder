@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Webpage</title>
+    <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
+    <script src="{% static 'web_app/js/maps.js' %}" defer></script>
+    <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
 <body>
 
@@ -19,8 +21,12 @@
         <!-- Oval button -->
          <table> <tr> 
             <td class="text-cell">Helping you discover your <br> new favorite spot.</td> 
-            <td class="button-cell"> <a href="#" class="button">Click Me</a> </td> 
-        </tr> </table>
+            <td class="button-cell"> 
+                <a href="{% url 'account' %}">
+                    <button id="startButton" class="button">Start Here</button> 
+                </a>
+            </td> 
+            </tr> </table>
     </div>
 
     
