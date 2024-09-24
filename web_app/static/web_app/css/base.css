@@ -63,8 +63,13 @@ header {
     left: 20px; 
     text-decoration: none; 
     color: #fcf3e3; 
-    font-size: 16px; 
+    font-size: 20px; 
     font-family: 'Literata', serif; 
+    font-weight: bold;
+}
+
+.bold-text {
+    font-size: 18px;
 }
 
 /* Centered box styling */
@@ -128,7 +133,7 @@ header {
 
 .login-input::placeholder {
     text-align: center;
-    color: #fcf3e3;
+    color: #fcf3e3d0;
     font-family: 'Literata', serif;
 }
 
