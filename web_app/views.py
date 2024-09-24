@@ -9,6 +9,10 @@ import json
 USE_DUMMY_DATA = True
 
 def index(request):
+    return render(request, 'index.html')
+
+
+def map(request):
     return render(request, 'map.html')
 
 @require_GET
