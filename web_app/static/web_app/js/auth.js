@@ -15,13 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutbut.addEventListener('click', () => handleLogout);
     }
     if(signbut){
-        logbut.addEventListener('click', () => showAuthForm('signup'));
+        signbut.addEventListener('click', () => showAuthForm('signup'));
     }
     if(authFormElem){
         authFormElem.addEventListener('submit', () => handleAuth);
     }
     function showAuthForm(action){
-        authform.style.display = 'block';
+        authForm.style.display = 'block';
         authTitle.textContent = action === 'login' ? 'Login' : 'Sign Up';
         authAction.value = action;
         emailText.style.display = action === 'signup' ? 'block' : 'none';
