@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
@@ -77,3 +78,15 @@ def get_place_details(request):
             return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
     else:
         return JsonResponse({'error': 'API request failed'}, status=response.status_code)
+    
+def login_view(request):
+    return render(request, 'login.html')
+
+def ask_account(request):
+    return render(request, 'account.html')
+
+def create_account(request):
+    return render(request, 'acc-create.html')
+
+def back_home(request):
+    return render(request, 'index.html')
