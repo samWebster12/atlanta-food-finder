@@ -12,18 +12,38 @@
     <!-- Header at the top -->
     <header>
         AtlantaFoodFinder
+        {% if user.is_authenticated %}
+            Welcome, {{ user.username }}! <button id="logoutButton">Logout</button>
+        {% else %}
+            <button id="loginButton">Login</button>
+            <button id="signupButton">Sign Up</button>
+        {% endif %}
     </header>
 
     <!-- Middle text content -->
     <div class="content">
-        <!-- Oval button -->
-         <table> <tr> 
-            <td class="text-cell">Helping you discover your <br> new favorite spot.</td> 
-            <td class="button-cell"> <a href="#" class="button">Click Me</a> </td> 
-        </tr> </table>
+        {% if user.is_authenticated %}
+            Welcome back! Ready to discover more great spots? <a href="{% url 'search_restaurants' %}">Start Exploring.</a>
+        {% else %}
+            Helping you discover your<br>new favorite spot.
+        {% endif %}
     </div>
 
-    
+    {% if not user.is_authenticated %}
+        <div id="authForm" style="display: none;">
+            <h2 id="authTitle"></h2>
+            <form id="authFormElement">
+                <input type="hidden" id="authAction" name="action" value="">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="email" id="email" name="email" placeholder="Email" style="display: none;" required>
+                <button type="submit">Submit</button>
+            </form>
+            <p id="authError"></p>
+        </div>
+    {% endif %}
+
+    <script src="{% static 'web_app/js/auth.js' %}"></script>
 
 </body>
 </html>

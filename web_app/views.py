@@ -21,6 +21,7 @@ def login(request):
             return JsonResponse({True})
         else:
             return JsonResponse({False})
+    return render(request, 'index.html', {'action', 'login'})
 @csrf_exempt
 def logout(request):
     logout(request)
@@ -39,6 +40,7 @@ def signup(request):
             return JsonResponse({True})
         except:
             return JsonResponse({False})
+    return render(request, 'index.html', {'action', 'signup'})
 def search_restaurants(request):
     query = request.GET.get('query', '')
     # You'll need to set up your API key in your Django settings
