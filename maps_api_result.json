@@ -1,0 +1,112 @@
+[
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 33.784603,
+        "lng": -84.4056784
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 33.78593917989272,
+          "lng": -84.40430407010727
+        },
+        "southwest": {
+          "lat": 33.78323952010728,
+          "lng": -84.40700372989272
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+    "icon_background_color": "#FF9E67",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+    "name": "Antico Pizza Napoletana",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 2268,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/109473651183996062292\">Ian Kramer</a>"
+        ],
+        "photo_reference": "AXCi2Q5-f3NuqSwyJq3OgJSuwY6jMtzV905ULCq5SPJBYOl9PGue-hKVZor2G474bK3Bo7smUVjQ9wJHDEoRUx7d_LGzAjL2o5IMn-wJs4MXJItaJkE_4GpxhqBq2ceJJpptTyaST1yA9jk0vTwNOX_tYaARXL0ajz1UBsGt_ZOfePHzvwCL",
+        "width": 4032
+      }
+    ],
+    "place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk",
+    "plus_code": {
+      "compound_code": "QHMV+VQ Atlanta, Georgia",
+      "global_code": "865QQHMV+VQ"
+    },
+    "price_level": 2,
+    "rating": 4.6,
+    "reference": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk",
+    "scope": "GOOGLE",
+    "types": [
+      "meal_takeaway",
+      "meal_delivery",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 5748,
+    "vicinity": "1093 Hemphill Ave NW, Atlanta"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": {
+        "lat": 33.7774064,
+        "lng": -84.3869966
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 33.77882317989272,
+          "lng": -84.38580297010728
+        },
+        "southwest": {
+          "lat": 33.77612352010728,
+          "lng": -84.38850262989273
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+    "icon_background_color": "#FF9E67",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+    "name": "Atwoods",
+    "opening_hours": {
+      "open_now": true
+    },
+    "photos": [
+      {
+        "height": 3456,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112305291456270551461\">A Google User</a>"
+        ],
+        "photo_reference": "AXCi2Q7b4xLwUI19Rg9-L4fEYlH_9HE-mNjNC0ZXL3FTgVAUJvO8yRm7l2ukyp2gvkcuQCoD7ovo5NvM1oCg24NgpTL-iiXNevL-shoBiihtrkpl-jnHcOIEwfefrWIZbHMQLtr-vCSWeGLjOL8S-GsHA7t5v-e_MgqAoeyqT0GtADLd23U",
+        "width": 5184
+      }
+    ],
+    "place_id": "ChIJlVIoR2YE9YgR8vJPLFCZPQg",
+    "plus_code": {
+      "compound_code": "QJG7+X6 Atlanta, Georgia",
+      "global_code": "865QQJG7+X6"
+    },
+    "price_level": 2,
+    "rating": 4.5,
+    "reference": "ChIJlVIoR2YE9YgR8vJPLFCZPQg",
+    "scope": "GOOGLE",
+    "types": [
+      "meal_takeaway",
+      "meal_delivery",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 956,
+    "vicinity": "817 W Peachtree St NW, Atlanta"
+  }
+]

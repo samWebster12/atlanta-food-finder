@@ -1,0 +1,1069 @@
+[
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.784603,
+                "lng": -84.4056784
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.78593917989272,
+                    "lng": -84.40430407010727
+                },
+                "southwest": {
+                    "lat": 33.78323952010728,
+                    "lng": -84.40700372989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Antico Pizza Napoletana",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2268,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/109473651183996062292\">Ian Kramer</a>"
+                ],
+                "photo_reference": "AXCi2Q62e3UovjLpY_oHQCJWuaxfThSoaNG3-WGMmOiNkPOmOc9KiDgPDkWkU2WkvI7Kn7tEYt_8zjRHtfUSAPcw9sI19EmTp8Uw3NdoVB0TiJwNEb_crH6vRQaDF4BSANrlSaexCdwKe7gWkhIk9oL0eJ77t27YLwmVezvsx1T8qoKmWPA7",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk",
+        "plus_code": {
+            "compound_code": "QHMV+VQ Atlanta, Georgia",
+            "global_code": "865QQHMV+VQ"
+        },
+        "price_level": 2,
+        "rating": 4.6,
+        "reference": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk",
+        "scope": "GOOGLE",
+        "types": [
+            "meal_delivery",
+            "meal_takeaway",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 5748,
+        "vicinity": "1093 Hemphill Ave NW, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7774064,
+                "lng": -84.3869966
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77882317989272,
+                    "lng": -84.38580297010728
+                },
+                "southwest": {
+                    "lat": 33.77612352010728,
+                    "lng": -84.38850262989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Atwoods",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3456,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/112305291456270551461\">A Google User</a>"
+                ],
+                "photo_reference": "AXCi2Q7tw1VAbjzcw5d__i2qo_iQxfSKbSKblas3zhGzTtft6HN6b0vjBpBilurWhZFyg6o9Hde0W6C6C5jdoH-3T-8JRPDQpU0tUPNo_whsxN8rGqXr_r7uANqUzXgWheFey8wcvwtxp9rchzi7t3B0LgOg--2YQXCWPLIZWfzG6luVwJg",
+                "width": 5184
+            }
+        ],
+        "place_id": "ChIJlVIoR2YE9YgR8vJPLFCZPQg",
+        "plus_code": {
+            "compound_code": "QJG7+X6 Atlanta, Georgia",
+            "global_code": "865QQJG7+X6"
+        },
+        "price_level": 2,
+        "rating": 4.5,
+        "reference": "ChIJlVIoR2YE9YgR8vJPLFCZPQg",
+        "scope": "GOOGLE",
+        "types": [
+            "meal_delivery",
+            "meal_takeaway",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 956,
+        "vicinity": "817 W Peachtree St NW, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7544032,
+                "lng": -84.3719241
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.75574847989272,
+                    "lng": -84.37057167010728
+                },
+                "southwest": {
+                    "lat": 33.75304882010727,
+                    "lng": -84.37327132989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Edgewood Pizzeria",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/100806123950006389283\">Chris Blalock</a>"
+                ],
+                "photo_reference": "AXCi2Q5X8kCGI72rMZSn3Pl_8eKlTNVzsWXXlAn4Es2UVGJpI9_YpLI0VhWtjsW1M96XtZoQLsZEZPZFW_xMCG6kt3HzCIqz29u3n5LxB8qOCDqIuUovFpZPu5UZ_7Zt1jQcz3N2FfpC8V_e5n25cDOIcF81A4AsbqxqZgG9vCAkNEC5kOY",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJueTkT_QD9YgRgm83-Vt4OMw",
+        "plus_code": {
+            "compound_code": "QJ3H+Q6 Atlanta, Georgia",
+            "global_code": "865QQJ3H+Q6"
+        },
+        "price_level": 1,
+        "rating": 4.2,
+        "reference": "ChIJueTkT_QD9YgRgm83-Vt4OMw",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 1527,
+        "vicinity": "478 Edgewood Ave SE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7421999,
+                "lng": -84.37356109999999
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.74362782989272,
+                    "lng": -84.37217427010727
+                },
+                "southwest": {
+                    "lat": 33.74092817010728,
+                    "lng": -84.37487392989271
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Grant Central Pizza & Pasta (Grant Park)",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 9000,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107811350501266203389\">A Google User</a>"
+                ],
+                "photo_reference": "AXCi2Q4ixff8U_ViHxE3-PVoSHGWXOMI4ThrWSE5RcIquFBc5Pm1wPLjHDHiRxv2Rp3MzOn2bTbTwQC3bzWHDm3sGm6WCWpqUoyBV2kgl_seMjfYz23ZFrbX9yg0f1tssjSXXOVUaXmar7Q15IEWAtkYCZ5eEPRLRLOjVHMRnZJBkUYnm9oI",
+                "width": 12000
+            }
+        ],
+        "place_id": "ChIJn7K4k-wD9YgR3Hu6V3cUlZI",
+        "plus_code": {
+            "compound_code": "PJRG+VH Atlanta, Georgia",
+            "global_code": "865QPJRG+VH"
+        },
+        "price_level": 1,
+        "rating": 4.3,
+        "reference": "ChIJn7K4k-wD9YgR3Hu6V3cUlZI",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 799,
+        "vicinity": "451 Cherokee Ave SE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7400632,
+                "lng": -84.3457226
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.74145482989272,
+                    "lng": -84.34436127010727
+                },
+                "southwest": {
+                    "lat": 33.73875517010728,
+                    "lng": -84.34706092989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Grant Central Pizza East",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2160,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106850214867999742993\">Mark D</a>"
+                ],
+                "photo_reference": "AXCi2Q7XeeXP02i_yqx6FBkAKIwiPVEUH_Z_wuYi8BBVLN0afYE5eMTOPGKMfsLXuUjSqEAL85hiRpVksvw0eRlEmOcGaXfLTEmyoJXkZkLswuAmhUI7DdIKnr-PoWB-nQoLgvfeGPvKXqbbyix_V6D_-EhxqdaBiqV_VJz5sfsyr1fRweXZ",
+                "width": 3840
+            }
+        ],
+        "place_id": "ChIJA2yXYlsB9YgRLx4rmMFjl-4",
+        "plus_code": {
+            "compound_code": "PMR3+2P Atlanta, Georgia",
+            "global_code": "865QPMR3+2P"
+        },
+        "price_level": 1,
+        "rating": 4.4,
+        "reference": "ChIJA2yXYlsB9YgRLx4rmMFjl-4",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 1608,
+        "vicinity": "1279 Glenwood Ave SE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7783323,
+                "lng": -84.3847971
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77979812989272,
+                    "lng": -84.38345272010727
+                },
+                "southwest": {
+                    "lat": 33.77709847010728,
+                    "lng": -84.38615237989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Vinny's N.Y. Pizza & Grill - Midtown",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107093477037348556897\">Aylin Ruth</a>"
+                ],
+                "photo_reference": "AXCi2Q42x1W0jdH2PeObiEAcEUNbai1EPjvqaHvzpv_7lmh60860YRCElTp9IrAX_CubMNns22xDIjo-dV0p67hog5Xw6oHxXGbbonuDAghwgH-i4K0-z2aFatTgw2lK-zZw1LaKmHjJSHkeOyluaAVv4NrqMmjqeBuW9Tu1XzR6W9b5qGMt",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJ3Yj5ZWgE9YgRmcJmXB1etO0",
+        "plus_code": {
+            "compound_code": "QJH8+83 Atlanta, Georgia",
+            "global_code": "865QQJH8+83"
+        },
+        "price_level": 1,
+        "rating": 4.3,
+        "reference": "ChIJ3Yj5ZWgE9YgRmcJmXB1etO0",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 770,
+        "vicinity": "860 Peachtree St NW, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7615744,
+                "lng": -84.39643149999999
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.76296167989273,
+                    "lng": -84.39499027010727
+                },
+                "southwest": {
+                    "lat": 33.76026202010728,
+                    "lng": -84.39768992989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Max's Coal Oven Pizzeria",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 1836,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106131762096106884011\">\u4eca\u897f\u8cb4\u5b50</a>"
+                ],
+                "photo_reference": "AXCi2Q7rF1zn2_1scKzgGWArokNGAG_EtFJX7HoapaEb4d_zJHF0uj4ZOHGtDlW_FswtK71UfbW3kZ2ER0Fw0A9AfjuM8yiy47iMf6rbZPWY2RADgyZDg6P6bmMoj1ZCh2zwVrVJ1N7SijT9HPqI7v_m6AyxRYhTwnt-flmXB0VIf1iAOh7P",
+                "width": 3264
+            }
+        ],
+        "place_id": "ChIJm8uX1X8E9YgRf3fJsVUuSGY",
+        "plus_code": {
+            "compound_code": "QJ63+JC Atlanta, Georgia",
+            "global_code": "865QQJ63+JC"
+        },
+        "price_level": 2,
+        "rating": 4.4,
+        "reference": "ChIJm8uX1X8E9YgRf3fJsVUuSGY",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 3069,
+        "vicinity": "300 Marietta St NW, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7650216,
+                "lng": -84.3339731
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.76636007989272,
+                    "lng": -84.33253867010727
+                },
+                "southwest": {
+                    "lat": 33.76366042010728,
+                    "lng": -84.33523832989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Fellini's Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 4000,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/105705700495991837961\">derrikj</a>"
+                ],
+                "photo_reference": "AXCi2Q6K9jgp_Ow8GtNs5SRMdR07iZCpfI9aXU7v4tw7GhzUu5cBYx7MRRxVQ4md9SzrB3OQZfGKvRtqLghTzVzxwmW2MzbvI5CZtuVnjLdEMlMaE0C4k6HQ44FmSycdnlGKUd7WdTlDFmaHftEc_bJ0QiNh9iyum-4hFfwO5c_31TZG95fS",
+                "width": 3000
+            }
+        ],
+        "place_id": "ChIJVTxdxbcG9YgRL-F9n6tZ9cQ",
+        "plus_code": {
+            "compound_code": "QM88+2C Atlanta, Georgia",
+            "global_code": "865QQM88+2C"
+        },
+        "price_level": 1,
+        "rating": 4.5,
+        "reference": "ChIJVTxdxbcG9YgRL-F9n6tZ9cQ",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 1258,
+        "vicinity": "1634 McLendon Ave NE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7735462,
+                "lng": -84.3576236
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77490422989273,
+                    "lng": -84.35622917010728
+                },
+                "southwest": {
+                    "lat": 33.77220457010728,
+                    "lng": -84.35892882989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Fellini's Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 4032,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/108284615416393551744\">Sharon Wright</a>"
+                ],
+                "photo_reference": "AXCi2Q5sLzdPyXQcbF1kUItf4eMZH8KHW3za0m_LLxrM5rYn-vaPb-72slWkBeP4090Ux2fbTN8tZ_HbWUzGgGBHrSYMFfZyHpmcdLRU5XwkvvRSULKFtxLuS2CbWAYF_md6IUcgBZ1YMVvlVv0RZf6tqzi2YjbRjw8Gt9ytONKj1_xHx8BH",
+                "width": 3024
+            }
+        ],
+        "place_id": "ChIJjU59JhwE9YgRKkgCBWC7Frg",
+        "plus_code": {
+            "compound_code": "QJFR+CX Atlanta, Georgia",
+            "global_code": "865QQJFR+CX"
+        },
+        "price_level": 1,
+        "rating": 4.5,
+        "reference": "ChIJjU59JhwE9YgRKkgCBWC7Frg",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 4837,
+        "vicinity": "909 Ponce De Leon Ave NE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.784979,
+                "lng": -84.4116282
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.78649622989272,
+                    "lng": -84.41026292010727
+                },
+                "southwest": {
+                    "lat": 33.78379657010728,
+                    "lng": -84.41296257989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Humble Pie",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 630,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/108820311002776491570\">A Google User</a>"
+                ],
+                "photo_reference": "AXCi2Q7OV4bkvGaYC5xeSMJIfDPY63WDhtxjBnuOYwbHyJOYelKCtFhN43144d6rEO0NU74xRRwmPrjO06UBK3LOtIAp3QzaCDHudNf3lXK83OMwyS2taQwMszTg15lg8_THkH0y6MjdhQ-HwdTWs8cp4HNLfwJ4WxWRGDhaY6EjnNS0hW8Q",
+                "width": 945
+            }
+        ],
+        "place_id": "ChIJq1gMN_oF9YgRjEYfBY69Z0Q",
+        "plus_code": {
+            "compound_code": "QHMQ+X8 Atlanta, Georgia",
+            "global_code": "865QQHMQ+X8"
+        },
+        "price_level": 2,
+        "rating": 4.8,
+        "reference": "ChIJq1gMN_oF9YgRjEYfBY69Z0Q",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 1447,
+        "vicinity": "1115 Howell Mill Rd NW, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7568195,
+                "lng": -84.3659856
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.75812867989271,
+                    "lng": -84.36461012010727
+                },
+                "southwest": {
+                    "lat": 33.75542902010727,
+                    "lng": -84.36730977989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Glide Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/104351052896577353614\">Brandon Foley</a>"
+                ],
+                "photo_reference": "AXCi2Q4Q1yBfZvovsuHWts8TqIpYlmjDtQyMrsTdViTs6KTQl_JYbGV0vpaYCOU6rEhJlhiXPzg3bqNHz_3JTSB2o0078dVOUv0CTjQm2qlpPMxOb3qL-nMWzwgJxCjiZZ5LAcSurP_3ziS0sSD9wc0RicZj2nrYvnW0zVwJEy9TCMLVUjQQ",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJy9zcpuAF9YgRxjdj1Zz5vvo",
+        "plus_code": {
+            "compound_code": "QJ4M+PJ Atlanta, Georgia",
+            "global_code": "865QQJ4M+PJ"
+        },
+        "price_level": 1,
+        "rating": 4.7,
+        "reference": "ChIJy9zcpuAF9YgRxjdj1Zz5vvo",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 494,
+        "vicinity": "659 Auburn Ave NE #506, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7365797,
+                "lng": -84.3853869
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.73804537989272,
+                    "lng": -84.38397612010728
+                },
+                "southwest": {
+                    "lat": 33.73534572010728,
+                    "lng": -84.38667577989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Junior's Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 4032,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/109077635724317452431\">Glori Avenda\u00f1o</a>"
+                ],
+                "photo_reference": "AXCi2Q6Zz6lTVdJmJNr90lUPv8QA9nzNE9RVKSAVrQrz-1_PGX8RkvpYoyurGEP9TdbY1OerJNtFUT0JcRKWHabrbgb9bT29K7W_EL_4A_Mggz451qreCJYElmsOvw4NfUCoXgpx3sMLGZXu4ss5OiIriIpRrPTkXQWZzo_IZ0Htrfabu4wh",
+                "width": 3024
+            }
+        ],
+        "place_id": "ChIJX-y8IBgD9YgRWOrFNRdvHtQ",
+        "plus_code": {
+            "compound_code": "PJP7+JR Atlanta, Georgia",
+            "global_code": "865QPJP7+JR"
+        },
+        "price_level": 1,
+        "rating": 4.3,
+        "reference": "ChIJX-y8IBgD9YgRWOrFNRdvHtQ",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 502,
+        "vicinity": "77 Georgia Ave SE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7772097,
+                "lng": -84.3527816
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77864012989272,
+                    "lng": -84.35138567010728
+                },
+                "southwest": {
+                    "lat": 33.77594047010728,
+                    "lng": -84.35408532989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Osteria 832 Pasta & Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 960,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/111358724602326766759\">A Google User</a>"
+                ],
+                "photo_reference": "AXCi2Q6H25PXB4HCZVp0akkozJd0dl-Qw5ca-nwqKuZeSi1NQSbqI0pGY9DF21gFqPEMJ1FY8AuJ0xNmhN6OszsLncahEO3uKU1xbhbxPauJJpc_dMWs-cvXTnduleUtckfmY4JxOa4i4J8cz9mEFow4aMNzgesPKTgmicoUm3K_EdvEIaH8",
+                "width": 1280
+            }
+        ],
+        "place_id": "ChIJ1fmqaaAG9YgR6MrlTxVXQMQ",
+        "plus_code": {
+            "compound_code": "QJGW+VV Atlanta, Georgia",
+            "global_code": "865QQJGW+VV"
+        },
+        "price_level": 2,
+        "rating": 4.3,
+        "reference": "ChIJ1fmqaaAG9YgR6MrlTxVXQMQ",
+        "scope": "GOOGLE",
+        "types": [
+            "meal_delivery",
+            "meal_takeaway",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 534,
+        "vicinity": "832 North Highland Avenue Northeast, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7793359,
+                "lng": -84.41037229999999
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.78067042989272,
+                    "lng": -84.40892872010727
+                },
+                "southwest": {
+                    "lat": 33.77797077010728,
+                    "lng": -84.41162837989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Emmy Squared Pizza: West Midtown - Atlanta, Georgia",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107504029501477639392\">Jacob Smallwood</a>"
+                ],
+                "photo_reference": "AXCi2Q76VdIj5IbWigmELunQz4py07wZBVu3gXMMvaXAJP5axUq428ygCb_uWKb53cJCq0ZzOebRdxfZ5TST8EAY8LImPoa5jwa0LVySrV4xjQeHFhCckNstMRu9kjMjFn-v6KxHIDTPiKutgjY_I35jPV5DMwCfdMoNhELJu_Zg_ZC6HLxf",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJRfmVRnQF9YgR582Xbcwyf1A",
+        "plus_code": {
+            "compound_code": "QHHQ+PV Atlanta, Georgia",
+            "global_code": "865QQHHQ+PV"
+        },
+        "price_level": 2,
+        "rating": 4.5,
+        "reference": "ChIJRfmVRnQF9YgR582Xbcwyf1A",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 464,
+        "vicinity": "1009 Marietta St NW ste a, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.746471,
+                "lng": -84.3703329
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.74775912989272,
+                    "lng": -84.36899472010725
+                },
+                "southwest": {
+                    "lat": 33.74505947010728,
+                    "lng": -84.3716943798927
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Firepit Pizza Tavern",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2427,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106193573186655144533\">Firepit Pizza Tavern</a>"
+                ],
+                "photo_reference": "AXCi2Q4OBiPM1_1Hugfs_mlW8End3pqJDWTIjaf9_B_Ithk6nrb9zc8xw6KgKIb4NnXqmw8d_Ytsmht9Po4IWetxy6NAR-cyM_feKHGwXxkWSRO_Ps5QIulV-v--8I6sirtibGOrv99RPPkEIWpJU2GiCG0V_M_5sbvvk_pHrKdUxLtpNHqX",
+                "width": 3240
+            }
+        ],
+        "place_id": "ChIJdSno9u0D9YgRtDMSXcFt73s",
+        "plus_code": {
+            "compound_code": "PJWH+HV Atlanta, Georgia",
+            "global_code": "865QPJWH+HV"
+        },
+        "price_level": 2,
+        "rating": 4.5,
+        "reference": "ChIJdSno9u0D9YgRtDMSXcFt73s",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "meal_delivery",
+            "food",
+            "bar",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 998,
+        "vicinity": "519 Memorial Dr SE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7672986,
+                "lng": -84.3493926
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.76859857989272,
+                    "lng": -84.34798042010728
+                },
+                "southwest": {
+                    "lat": 33.76589892010728,
+                    "lng": -84.35068007989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Savage Pizza (Little 5 Points)",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/116136577630010407750\">Drew Schneider</a>"
+                ],
+                "photo_reference": "AXCi2Q71TmMu3nj5j07_GdvRwLlbk2ADCC1Phpyd6WCazk0FRJkcMARyKY2Pmty1MEOSlmlK69H94Uyi6JsAD02Qtcy_Y6V8x5NXKutbMDfb2udvHnwXdqdPiS4peujV6hHEcTGyCeWesowu1Jd9Ku2axxbCq1U4ddSD_MgqRP4AzZFoemWZ",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJER6DqagG9YgRUHZgycN-58c",
+        "plus_code": {
+            "compound_code": "QM82+W6 Atlanta, Georgia",
+            "global_code": "865QQM82+W6"
+        },
+        "price_level": 1,
+        "rating": 4.4,
+        "reference": "ChIJER6DqagG9YgRUHZgycN-58c",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 2057,
+        "vicinity": "484 Moreland Ave NE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7574502,
+                "lng": -84.38236289999999
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.75882987989272,
+                    "lng": -84.38105002010728
+                },
+                "southwest": {
+                    "lat": 33.75613022010728,
+                    "lng": -84.38374967989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Stoner's Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106981165696851382212\">Wendy Walker</a>"
+                ],
+                "photo_reference": "AXCi2Q6gxSDk9j4T7IbM7fWiNnmmAdedqyb75QeBUiyc3_ICKp95jIyVT1MtIR3TjmYI8V1lBKBS_CLckCeNj6QTRxgzRLF1qLDtVP56ZnWN-3afl7dth6bCb8uY1CGyVWoKXM4WNo1IFAiWTgx3fso6Fov_peQWIW9NgzEwNkzBToyfJZs",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJv5nHz4kD9YgRbtpfpxl6yqQ",
+        "plus_code": {
+            "compound_code": "QJ48+XX Atlanta, Georgia",
+            "global_code": "865QQJ48+XX"
+        },
+        "price_level": 1,
+        "rating": 3.9,
+        "reference": "ChIJv5nHz4kD9YgRbtpfpxl6yqQ",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 192,
+        "vicinity": "120 Piedmont Ave NE, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.718707,
+                "lng": -84.3498505
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.72005682989273,
+                    "lng": -84.34850067010728
+                },
+                "southwest": {
+                    "lat": 33.71735717010728,
+                    "lng": -84.35120032989272
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Luca's Brooklyn Pizzeria",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2209,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/101817966637722212259\">Don Plemmons</a>"
+                ],
+                "photo_reference": "AXCi2Q6dycYJ1ns8VMqvWqgiqNPuJ96UfIgFTJ4geuSt0JnDJEAQIbxQqZ7tEWr58qXMmXzc33AVG8UA0HgSzEgL4mLfLHmYxLAlfDCo-vywrHT11AQF-t0HQOx2ugoO1UPtbyahtvRwi-vnaswSciFQ3MQXoffea_D9_6LtQBzF_LKYw8uQ",
+                "width": 3112
+            }
+        ],
+        "place_id": "ChIJFwYncAAB9YgRcxzdb1P69rQ",
+        "plus_code": {
+            "compound_code": "PM92+F3 Atlanta, Georgia",
+            "global_code": "865QPM92+F3"
+        },
+        "rating": 4,
+        "reference": "ChIJFwYncAAB9YgRcxzdb1P69rQ",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 28,
+        "vicinity": "1341 Moreland Ave SE Suite 1000, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7730492,
+                "lng": -84.3661095
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77427912989271,
+                    "lng": -84.36514767010726
+                },
+                "southwest": {
+                    "lat": 33.77157947010727,
+                    "lng": -84.36784732989271
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Pizza Jeans",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/115785347602782217750\">Kiran Chigurupati</a>"
+                ],
+                "photo_reference": "AXCi2Q7Nb7idegNWZOmNgD8M4PfpihN0vb9bAW_CblZR2b_ldd8vTVY817c5cVJvHAwtVHsm9ImvodNruZky_8Zk9wulBNBGptJpp0xexKlFb8Nq9pqsnA1fYYBgqLkwAmNYcUPRSo5FJB4YdaMrhFxAUSvxFH66y7rWTGy8-Q8K1uZOZPm1",
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJr6ZaHm8F9YgR9SgoCDO4e78",
+        "plus_code": {
+            "compound_code": "QJFM+6H Atlanta, Georgia",
+            "global_code": "865QQJFM+6H"
+        },
+        "price_level": 1,
+        "rating": 4.1,
+        "reference": "ChIJr6ZaHm8F9YgR9SgoCDO4e78",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 233,
+        "vicinity": "675 Ponce De Leon Ave NE Suite140, Atlanta"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 33.7766683,
+                "lng": -84.3882138
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": 33.77809867989272,
+                    "lng": -84.38680852010728
+                },
+                "southwest": {
+                    "lat": 33.77539902010727,
+                    "lng": -84.38950817989273
+                }
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+        "icon_background_color": "#FF9E67",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+        "name": "Ray's New York Pizza",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 4032,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/114387329544665693610\">Tyrell Ross</a>"
+                ],
+                "photo_reference": "AXCi2Q4nyUd5CTezQs86zFC_CSt41y9LOfjbrjY5pXRUnLvk--oRada8ocEt_KPKgWvCBMD6etsrSU5StzLzzCb_7F8zF_h1t2bndSpAG91hC0OThloIeRP6esRYjEjK2Ix0JQvVAQfCOK_dQM-_VhTwgTTiHv_dfM3Kaq0FTnsL7v3vZr8e",
+                "width": 3024
+            }
+        ],
+        "place_id": "ChIJz0OaXmYE9YgRdcEDP2yYyH4",
+        "plus_code": {
+            "compound_code": "QJG6+MP Atlanta, Georgia",
+            "global_code": "865QQJG6+MP"
+        },
+        "price_level": 1,
+        "rating": 4.2,
+        "reference": "ChIJz0OaXmYE9YgRdcEDP2yYyH4",
+        "scope": "GOOGLE",
+        "types": [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 746,
+        "vicinity": "26 5th St NW, Atlanta"
+    }
+]
