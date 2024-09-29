@@ -1,14 +1,17 @@
 let map;
 let markers = [];
-let userLocation;
 
+//Atlanta
+let userLocation = {
+    lat: 33.7490,
+    lng: -84.3880
+};
+let isLoggedIn = false;
 
-var btn = document.getElementById("startButton");
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+document.addEventListener('DOMContentLoaded', function() {
+    initMap();
+    initEventListeners();
+});
 
 function initMap() {
     const atlanta = { lat: 33.7490, lng: -84.3880 };
@@ -16,87 +19,88 @@ function initMap() {
         zoom: 12,
         center: atlanta,
     });
+    console.log("Map initialized");
+}
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                userLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                console.log("User location:", userLocation);
-            },
-            error => {
-                console.error("Error getting user location:", error);
-                alert("Unable to retrieve your location.");
-            }
-        );
+function initEventListeners() {
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    
+    if (searchButton) {
+        searchButton.addEventListener('click', function() {
+            handleSearch(searchInput.value);
+        });
     } else {
-        alert("Geolocation is not supported by this browser.");
+        console.error("Search button not found");
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch(searchInput.value);
+            }
+        });
+    } else {
+        console.error("Search input not found");
     }
 }
 
-function getPlaceDetails(placeId) {
-    // Construct the URL for your Django endpoint
-    const url = `/api/place-details/?place_id=${encodeURIComponent(placeId)}`;
+function handleSearch(searchInput) {
+    console.log("Search input: " + searchInput);
+    if (searchInput.trim() === '') {
+        alert('Please enter a valid search input');
+        return;
+    }
 
-    // Make the fetch request
-    return fetch(url)
-        .then(response => {
-            // Check if the response is ok (status in the range 200-299)
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            print("Place Details:", data);
-            // Return the data in case you want to use it further
-            return data;
-        })
-        .catch(error => {
-            console.error('Error fetching place details:', error);
-            return [];
-        });
+    const distanceFilter = document.getElementById('distance-filter').value;
+    const ratingsFilter = document.getElementById('ratings-filter').value;
+    const searchBy = document.getElementById('search-by').value;
+
+    searchRestaurants(searchInput, distanceFilter, ratingsFilter, searchBy);
 }
 
-
-function searchRestaurants() {
-    const query = document.getElementById('search-input').value;
-    const maxDistanceMiles = document.getElementById('distanceFilter').value; // Get distance in miles
-    const maxDistance = maxDistanceMiles ? maxDistanceMiles * 1.60934 : Infinity; // Convert to kilometers
-    const minRating = parseFloat(document.getElementById('ratingFilter').value) || 0;
-
-
+function searchRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     if (!userLocation) {
         alert("User location not available.");
         return;
     }
 
     console.log("SEARCHING RESTAURANTS: " + query);
-    fetch(`/search/?query=${encodeURIComponent(query)}`)
+    fetch(`/search/?query=${encodeURIComponent(query)}&search_by=${encodeURIComponent(searchBy)}&distance_filter=${encodeURIComponent(distanceFilter)}`)
         .then(response => response.json())
         .then(data => {
             clearMarkers();
             console.log("DATA BEFORE FILTERS: ", data)
+
             const filteredRestaurants = data.restaurants.filter(restaurant => {
-                const distance = calculateDistance(
+                // Calculate distance in kilometers
+                const distanceKm = calculateDistance(
                     userLocation.lat,
                     userLocation.lng,
                     restaurant.lat,
                     restaurant.lng
                 );
                 
+                // Convert distance to miles (1 km ≈ 0.621371 miles)
+                const distanceMiles = distanceKm * 0.621371;
+                
+                // Parse the rating and distance filter values
+                const minRating = parseFloat(ratingsFilter) || 0;
+                const maxDistanceMiles = parseFloat(distanceFilter) || Infinity;
+            
                 // Check if rating is present and valid
-                const rating = parseFloat(restaurant.rating) || 0; // Ensure rating is a number
-                return distance <= maxDistance && rating >= minRating; 
+                const rating = parseFloat(restaurant.rating) || 0;
+            
+                return distanceMiles <= maxDistanceMiles && rating >= minRating;
             });
+
             filteredRestaurants.forEach(restaurant => {
                 addMarker(restaurant);
             });
             console.log("DATA AFTER FILTERS: ", filteredRestaurants);
         });
 }
+
 
 function addMarker(restaurant) {
     const marker = new google.maps.Marker({
@@ -128,4 +132,5 @@ function degreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
 
-window.onload = initMap;
+// Fallback: If Google Maps API is loaded after our script
+window.initMap = initMap;
