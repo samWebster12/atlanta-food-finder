@@ -45,7 +45,7 @@ function initEventListeners() {
     }
 }
 
-function handleSearch(searchInput) {
+async function handleSearch(searchInput) {
     console.log("Search input: " + searchInput);
     if (searchInput.trim() === '') {
         alert('Please enter a valid search input');
@@ -56,61 +56,200 @@ function handleSearch(searchInput) {
     const ratingsFilter = document.getElementById('ratings-filter').value;
     const searchBy = document.getElementById('search-by').value;
 
-    searchRestaurants(searchInput, distanceFilter, ratingsFilter, searchBy);
+    const restaurants = await getRestaurants(searchInput, distanceFilter, ratingsFilter, searchBy);
+
+    displayRestaurants(restaurants);
 }
 
-function searchRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
+async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     if (!userLocation) {
         alert("User location not available.");
-        return;
+        return [];
     }
 
-    console.log("SEARCHING RESTAURANTS: " + query);
-    fetch(`/search/?query=${encodeURIComponent(query)}&search_by=${encodeURIComponent(searchBy)}&distance_filter=${encodeURIComponent(distanceFilter)}`)
-        .then(response => response.json())
-        .then(data => {
-            clearMarkers();
-            console.log("DATA BEFORE FILTERS: ", data)
+    try {
+        const response = await fetch(`/search/?query=${encodeURIComponent(query)}&search_by=${encodeURIComponent(searchBy)}&distance_filter=${encodeURIComponent(distanceFilter)}`);
+        const data = await response.json();
+        clearMarkers();
 
-            const filteredRestaurants = data.restaurants.filter(restaurant => {
-                // Calculate distance in kilometers
-                const distanceKm = calculateDistance(
-                    userLocation.lat,
-                    userLocation.lng,
-                    restaurant.lat,
-                    restaurant.lng
-                );
-                
-                // Convert distance to miles (1 km ≈ 0.621371 miles)
-                const distanceMiles = distanceKm * 0.621371;
-                
-                // Parse the rating and distance filter values
-                const minRating = parseFloat(ratingsFilter) || 0;
-                const maxDistanceMiles = parseFloat(distanceFilter) || Infinity;
-            
-                // Check if rating is present and valid
-                const rating = parseFloat(restaurant.rating) || 0;
-            
-                return distanceMiles <= maxDistanceMiles && rating >= minRating;
-            });
+        console.log(data)
+        
+        console.log("Raw data from server:", data);
 
-            filteredRestaurants.forEach(restaurant => {
-                addMarker(restaurant);
-            });
-            console.log("DATA AFTER FILTERS: ", filteredRestaurants);
+        const filteredRestaurants = data.restaurants.filter(restaurant => {            
+            const lat = restaurant.geometry?.location?.lat;
+            const lng = restaurant.geometry?.location?.lng;
+            
+            if (typeof lat !== 'number' || typeof lng !== 'number') {
+                console.error("Invalid coordinates for restaurant:", restaurant.name, lat, lng);
+                return false;
+            }
+            
+            const distanceKm = calculateDistance(
+                userLocation.lat,
+                userLocation.lng,
+                lat,
+                lng
+            );
+            
+            const distanceMiles = distanceKm * 0.621371;
+            const minRating = parseFloat(ratingsFilter) || 0;
+            const maxDistanceMiles = parseFloat(distanceFilter) || Infinity;
+            const rating = parseFloat(restaurant.rating) || 0;
+        
+            return distanceMiles <= maxDistanceMiles && rating >= minRating;
         });
+
+        return filteredRestaurants;
+    } catch (error) {
+        console.error("Error fetching restaurants:", error);
+        alert("An error occurred while fetching restaurants. Please try again.");
+        return [];
+    }
 }
 
+function createRestaurantCard(restaurant, imageUrl) {
+    const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
+    const priceLevel = '$'.repeat(restaurant.price_level || 0);
 
-function addMarker(restaurant) {
-    const marker = new google.maps.Marker({
-        position: { lat: restaurant.lat, lng: restaurant.lng },
-        map: map,
-        title: restaurant.name
+    const lat = restaurant.geometry?.location?.lat;
+    const lng = restaurant.geometry?.location?.lng;
+        
+    if (lat === undefined || lng === undefined) {
+        console.error("Latitude or longitude is undefined for restaurant:", restaurant.name);
+        return;
+    }
+    
+    const numLat = Number(lat);
+    const numLng = Number(lng);
+    
+    const cardHTML = `
+        <div class="restaurant-card">
+            <div class="restaurant-image">
+                <img src="${imageUrl}" alt="${restaurant.name}" onerror="this.src='{% static "web_app/images/pasta_placeholder.jpg" %}'">
+            </div>
+            <div class="restaurant-info">
+                <h2 class="restaurant-name">${restaurant.name} <span class="price">${priceLevel}</span></h2>
+                <div class="rating">
+                    <span class="stars">${starRating}</span>
+                    <span class="rating-text">${restaurant.rating}/5.0 (${restaurant.user_ratings_total} Reviews)</span>
+                </div>
+                <p class="address">${restaurant.vicinity}</p>
+                <p class="hours"><span class="${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'open' : 'closed'}">
+                    ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
+                <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
+                <div class="action-buttons">
+                    <button class="action-btn order">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
+                        </svg>
+                        ORDER
+                    </button>
+                    <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${numLat},${numLng}" target="_blank"">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        DIRECTIONS
+                    </a>
+                    <button class="action-btn website" onclick="openWebsite('${restaurant.place_id}')">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                        </svg>
+                        WEBSITE
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return cardHTML;
+}
+
+function displayRestaurants(restaurants) {
+    const resultsContainer = document.querySelector('.results');
+    resultsContainer.innerHTML = '<h1 class="results-header">Results</h1>'; // Clear previous results
+
+    restaurants.forEach(restaurant => {
+        const imageUrl = restaurant.photos && restaurant.photos[0]
+        ? `/proxy_photo/?photo_reference=${restaurant.photos[0].photo_reference}`
+        : '{% static "web_app/images/pasta_placeholder.jpg" %}';
+
+        const card = createRestaurantCard(restaurant, imageUrl);
+        addMarker(restaurant, imageUrl);
+        resultsContainer.insertAdjacentHTML('beforeend', card);
     });
-    markers.push(marker);
 }
 
+function addMarker(restaurant, imageUrl) {
+    const lat = restaurant.geometry?.location?.lat;
+    const lng = restaurant.geometry?.location?.lng;
+        
+    if (lat === undefined || lng === undefined) {
+        console.error("Latitude or longitude is undefined for restaurant:", restaurant.name);
+        return;
+    }
+    
+    const numLat = Number(lat);
+    const numLng = Number(lng);
+    
+    if (isNaN(numLat) || isNaN(numLng)) {
+        console.error("Invalid coordinates for marker:", restaurant.name, numLat, numLng);
+        return;
+    }
+    
+    try {
+        const marker = new google.maps.Marker({
+            position: { lat: numLat, lng: numLng },
+            map: map,
+            title: restaurant.name
+        });
+        
+        markers.push(marker);
+        
+        // Create star rating
+        const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
+        
+        const infoWindow = new google.maps.InfoWindow({
+            content: `
+                <div style="width: 300px; font-family: Arial, sans-serif; background-color: #fff; overflow: hidden;">
+                    <img src="${imageUrl}" alt="${restaurant.name}" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 15px 20px 20px;">
+                        <h3 style="margin: 0 0 10px; color: #1a1a1a; font-size: 18px;">${restaurant.name}</h3>
+                        <p style="margin: 5px 0; font-size: 14px;">
+                            <span style="color: #ffd700;">${starRating}</span> 
+                            <span style="color: #4a4a4a;">${restaurant.rating} (${restaurant.user_ratings_total} reviews)</span>
+                        </p>
+                        <p style="margin: 5px 0; font-size: 14px; color: #4a4a4a;">${restaurant.vicinity || 'N/A'}</p>
+                        ${restaurant.opening_hours ? 
+                            `<p style="margin: 5px 0; font-size: 14px; color: ${restaurant.opening_hours.open_now ? '#4CAF50' : '#F44336'}; font-weight: bold;">
+                                ${restaurant.opening_hours.open_now ? 'Open now' : 'Closed'}
+                            </p>` : ''
+                        }
+                        <div style="margin-top: 15px;">
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${numLat},${numLng}" target="_blank" style="text-decoration: none; color: #1a73e8; font-size: 14px; font-weight: 500;">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+            `,
+            pixelOffset: new google.maps.Size(0, -20),
+            disableAutoPan: false,
+            maxWidth: 300 // Ensures the InfoWindow doesn't expand beyond our content width
+        });
+        
+        // Remove default InfoWindow background
+        infoWindow.setOptions({
+            backgroundColor: 'transparent',
+            padding: '0'
+        });
+        
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+    } catch (error) {
+        console.error("Error creating marker for restaurant:", restaurant.name, error);
+    }
+}
 function clearMarkers() {
     markers.forEach(marker => marker.setMap(null));
     markers = [];
@@ -131,6 +270,22 @@ function calculateDistance(lat1, lng1, lat2, lng2){
 function degreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
+
+function adjustContainerHeights() {
+    if (window.innerWidth > 768) { // Not mobile
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const searchContainerHeight = document.querySelector('.search-container').offsetHeight;
+        const bottomContent = document.querySelector('.bottom-content');
+        const availableHeight = window.innerHeight - headerHeight - searchContainerHeight;
+        bottomContent.style.height = `${availableHeight}px`;
+    } else {
+        document.querySelector('.bottom-content').style.height = 'auto';
+    }
+}
+
+// Call on page load and window resize
+window.addEventListener('load', adjustContainerHeights);
+window.addEventListener('resize', adjustContainerHeights);
 
 // Fallback: If Google Maps API is loaded after our script
 window.initMap = initMap;
