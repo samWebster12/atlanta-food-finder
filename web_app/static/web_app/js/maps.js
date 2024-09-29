@@ -68,7 +68,7 @@ async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     }
 
     try {
-        const response = await fetch(`/search/?query=${encodeURIComponent(query)}&search_by=${encodeURIComponent(searchBy)}&distance_filter=${encodeURIComponent(distanceFilter)}`);
+        const response = await fetch(`/api/search/?query=${encodeURIComponent(query)}&search_by=${encodeURIComponent(searchBy)}&distance_filter=${encodeURIComponent(distanceFilter)}`);
         const data = await response.json();
         clearMarkers();
 
@@ -117,47 +117,41 @@ function createRestaurantCard(restaurant, imageUrl) {
         
     if (lat === undefined || lng === undefined) {
         console.error("Latitude or longitude is undefined for restaurant:", restaurant.name);
-        return;
+        return '';
     }
     
     const numLat = Number(lat);
     const numLng = Number(lng);
     
     const cardHTML = `
-        <div class="restaurant-card">
-            <div class="restaurant-image">
-                <img src="${imageUrl}" alt="${restaurant.name}" onerror="this.src='{% static "web_app/images/pasta_placeholder.jpg" %}'">
-            </div>
-            <div class="restaurant-info">
-                <h2 class="restaurant-name">${restaurant.name} <span class="price">${priceLevel}</span></h2>
-                <div class="rating">
-                    <span class="stars">${starRating}</span>
-                    <span class="rating-text">${restaurant.rating}/5.0 (${restaurant.user_ratings_total} Reviews)</span>
+        <div class="restaurant-card" data-place-id="${restaurant.place_id}">
+            <div class="restaurant-summary">
+                <div class="restaurant-image">
+                    <img src="${imageUrl}" alt="${restaurant.name}" onerror="this.src='{% static "web_app/images/pasta_placeholder.jpg" %}'">
                 </div>
-                <p class="address">${restaurant.vicinity}</p>
-                <p class="hours"><span class="${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'open' : 'closed'}">
-                    ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
-                <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
+                <div class="restaurant-info">
+                    <h2 class="restaurant-name">${restaurant.name} <span class="price">${priceLevel}</span></h2>
+                    <div class="rating">
+                        <span class="stars">${starRating}</span>
+                        <span class="rating-text">${restaurant.rating}/5.0 (${restaurant.user_ratings_total} Reviews)</span>
+                    </div>
+                    <p class="address">${restaurant.vicinity}</p>
+                    <p class="hours"><span class="${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'open' : 'closed'}">
+                        ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
+                    <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
+                </div>
+            </div>
+            <div class="restaurant-details" style="display: none;">
+                <div class="details-content">
+
+                </div>
                 <div class="action-buttons">
-                    <button class="action-btn order">
-                        <svg viewBox="0 0 24 24" class="icon">
-                            <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                        </svg>
-                        ORDER
-                    </button>
-                    <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${numLat},${numLng}" target="_blank"">
+                    <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${numLat},${numLng}" target="_blank">
                         <svg viewBox="0 0 24 24" class="icon">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                         </svg>
                         DIRECTIONS
                     </a>
-                    <button class="action-btn website" onclick="openWebsite('${restaurant.place_id}')">
-                        <svg viewBox="0 0 24 24" class="icon">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                        </svg>
-                        WEBSITE
-                    </button>
                 </div>
             </div>
         </div>
@@ -166,18 +160,83 @@ function createRestaurantCard(restaurant, imageUrl) {
     return cardHTML;
 }
 
+async function expandRestaurantCard(card) {
+    const placeId = card.dataset.placeId;
+    const detailsSection = card.querySelector('.restaurant-details');
+    const detailsContent = card.querySelector('.details-content');
+
+    if (detailsSection.style.display === 'none') {
+        // Expand the card
+        detailsSection.style.display = 'block';
+        card.classList.add('expanded');
+
+        // Fetch and display additional details if not already loaded
+        if (!detailsContent.innerHTML.trim()) {
+            console.log('Fetching details for place:', placeId);
+            detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Loading details...</p>';
+            try {
+                // Fetch logic here (commented out for now)
+                const response = await fetch(`/api/place-details/?place_id=${placeId}`);
+                const details = await response.json();
+
+                console.log('Details:', details);
+                
+                detailsContent.innerHTML = `
+                    <div class="info-section">
+                        <div class="contact-section">
+                            <div>
+                                <h4>Contact</h4>
+                                <p>📞 ${details.formatted_phone_number || 'N/A'}</p>
+                                <p>🌐 ${details.website ? `<a href="${details.website}" target="_blank">Website</a>` : 'N/A'}</p>
+                            </div>
+                            <div>
+                                <h4>Address</h4>
+                                <p>📍 ${details.formatted_address || 'N/A'}</p>
+                            </div>
+                        </div>
+                        <div class="hours-section">
+                            <h4>Hours</h4>
+                            <ul class="hours-list">
+                                ${details.opening_hours ? details.opening_hours.weekday_text.map(day => `<li>${day}</li>`).join('') : '<li>N/A</li>'}
+                            </ul>
+                        </div>
+                    </div>
+
+                `;
+            } catch (error) {
+                detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Failed to load details. Please try again.</p>';
+                console.error('Error fetching place details:', error);
+            }
+        }
+    } else {
+        // Collapse the card
+        detailsSection.style.display = 'none';
+        card.classList.remove('expanded');
+    }
+}
+
 function displayRestaurants(restaurants) {
     const resultsContainer = document.querySelector('.results');
     resultsContainer.innerHTML = '<h1 class="results-header">Results</h1>'; // Clear previous results
 
     restaurants.forEach(restaurant => {
         const imageUrl = restaurant.photos && restaurant.photos[0]
-        ? `/proxy_photo/?photo_reference=${restaurant.photos[0].photo_reference}`
+        ? `/api/proxy-photo/?photo_reference=${restaurant.photos[0].photo_reference}`
         : '{% static "web_app/images/pasta_placeholder.jpg" %}';
 
         const card = createRestaurantCard(restaurant, imageUrl);
         addMarker(restaurant, imageUrl);
         resultsContainer.insertAdjacentHTML('beforeend', card);
+    });
+
+    // Add click listeners to the cards
+    document.querySelectorAll('.restaurant-card').forEach(card => {
+        card.addEventListener('click', function(event) {
+            // Prevent expansion when clicking on action buttons
+            if (!event.target.closest('.action-buttons')) {
+                expandRestaurantCard(this);
+            }
+        });
     });
 }
 
