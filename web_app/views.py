@@ -3,11 +3,14 @@ from django.contrib.auth import authenticate, login
 from django.conf import settings
 import json
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 from django.conf import settings
 import aiohttp
 import asyncio
 from asgiref.sync import sync_to_async
+import requests
+
 
 USE_DUMMY_DATA = False
 
@@ -27,18 +30,8 @@ async def search_restaurants(request):
             async with session.get(url, params=params) as response:
                 data = await response.json()
                 results = data.get('results', [])
-
-        restaurants = [
-            {
-                'name': result['name'],
-                'lat': result['geometry']['location']['lat'],
-                'lng': result['geometry']['location']['lng'],
-                'rating': result.get('rating', 0)
-            }
-            for result in results
-        ]
         
-        return JsonResponse({'restaurants': restaurants})
+        return JsonResponse({'restaurants': results})
     else:
         search_by = request.GET.get('search_by', '')
         print(f"Search by: {search_by}")
@@ -46,17 +39,7 @@ async def search_restaurants(request):
         
         results = await sync_to_async(read_json_file)(file_path)
 
-        restaurants = [
-            {
-                'name': result['name'],
-                'lat': result['geometry']['location']['lat'],
-                'lng': result['geometry']['location']['lng'],
-                'rating': result.get('rating', 0)
-            }
-            for result in results
-        ]
-        
-        return JsonResponse({'restaurants': restaurants})
+        return JsonResponse({'restaurants': results})
 
 async def create_search_params(query, search_by, distance_filter):
     params = {
@@ -123,8 +106,24 @@ async def get_coordinates(location):
 def read_json_file(file_path):
     with open(file_path, 'r') as json_file:
         return json.load(json_file)
+    
+def proxy_place_photo(request):
+    photo_reference = request.GET.get('photo_reference')
+    max_width = request.GET.get('max_width', 400)
+    
+    if not photo_reference:
+        return HttpResponse('No photo reference provided', status=400)
+    
+    url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth={max_width}&photoreference={photo_reference}&key={settings.GOOGLE_MAPS_API_KEY}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return HttpResponse(response.content, content_type=response.headers['Content-Type'])
+    else:
+        return HttpResponse('Failed to fetch image', status=response.status_code)
 
-# Other views (can be converted to async if they involve I/O operations)
+# Other views
 @require_GET
 async def get_place_details(request):
     place_id = request.GET.get('place_id')
@@ -145,7 +144,10 @@ async def get_place_details(request):
             else:
                 return JsonResponse({'error': 'API request failed'}, status=response.status)
 
-# Synchronous views can remain as they are
+
+
+
+# Synchronous views
 def index(request):
     return render(request, 'index.html')
 

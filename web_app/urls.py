@@ -10,4 +10,5 @@ urlpatterns = [
     path('create-account/', views.create_account, name=',create'),
     path('home/', views.back_home, name='home'),
     path('place-details/', views.get_place_details, name='place_details'),
+    path('proxy_photo/', views.proxy_place_photo, name='proxy_place_photo'),
 ]

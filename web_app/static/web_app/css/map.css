@@ -194,25 +194,40 @@ select {
 }
 
 
-/* Bottom content styles */
 .bottom-content {
     display: flex;
-    padding: 20px;
+    height: calc(100vh - 150px); /* Adjust 150px based on the height of your header and search container */
 }
 
 .results {
     flex: 1;
-    margin-right: 20px;
-    /* Add styles for your results content */
+    overflow-y: auto;
+    padding-right: 20px;
+    max-height: 100%;
 }
 
-/* Map styles */
-/* Map styles */
 .map {
     flex: 1;
-    margin-right: 20px;
-    border-radius: 10px;
-    overflow: hidden;
+    min-width: 300px; /* Adjust as needed */
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .bottom-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .results {
+        max-height: none;
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    .map {
+        height: 300px; /* Fixed height for mobile */
+        width: 100%;
+    }
 }
 
 /* Style the Google Maps container */

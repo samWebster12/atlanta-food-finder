@@ -27,7 +27,7 @@
         <div class="search-content">
             <div class="search-input-group">
                 <input type="text" id="search-input" class="search-input" placeholder="Search for restaurants...">
-                <button id="search-button" class="search-button" onclick="searchRestaurants()">
+                <button id="search-button" class="search-button">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -61,121 +61,10 @@
     <div class="bottom-content">
         <div class="results">
             <h1 class="results-header">Results</h1>
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <!-- Restaurant cards will be dynamically inserted here -->
         </div>
-    
-        
-        <div class="map" id="map">
-    
-        </div> 
-    </div> 
+        <div class="map" id="map"></div>
+    </div>
 
 </body>
 </html>
