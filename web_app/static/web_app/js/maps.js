@@ -57,10 +57,39 @@ async function handleSearch(searchInput) {
     const searchBy = document.getElementById('search-by').value;
 
     const restaurants = await getRestaurants(searchInput, distanceFilter, ratingsFilter, searchBy);
+    if (restaurants.length > 0 && searchBy == 'location') {
+        userLocation = {
+            lat: restaurants[0].geometry.location.lat,
+            lng: restaurants[0].geometry.location.lng
+        };
+
+        map.setCenter(userLocation);
+
+        // Set the zoom based on distanceFilter
+        const zoomLevel = getZoomLevelFromDistance(distanceFilter);
+        map.setZoom(zoomLevel);
+    }
 
     displayRestaurants(restaurants);
 }
 
+
+function getZoomLevelFromDistance(distance) {
+    // Parse distance to integer in case it's a string
+    const parsedDistance = parseInt(distance, 10);
+
+    switch (parsedDistance) {
+        case 5:
+            return 13; // Zoom into neighborhood level
+        case 10:
+            return 12; // Zoom into city level
+        case 20:
+            return 12; // Zoom out to larger area
+        case 30:
+        default:
+            return 11;  // Default zoom level for larger distances
+    }
+}
 async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     if (!userLocation) {
         alert("User location not available.");
@@ -77,29 +106,13 @@ async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
         console.log("Raw data from server:", data);
 
         const filteredRestaurants = data.restaurants.filter(restaurant => {            
-            const lat = restaurant.geometry?.location?.lat;
-            const lng = restaurant.geometry?.location?.lng;
-            
-            if (typeof lat !== 'number' || typeof lng !== 'number') {
-                console.error("Invalid coordinates for restaurant:", restaurant.name, lat, lng);
-                return false;
-            }
-            
-            const distanceKm = calculateDistance(
-                userLocation.lat,
-                userLocation.lng,
-                lat,
-                lng
-            );
-            
-            const distanceMiles = distanceKm * 0.621371;
             const minRating = parseFloat(ratingsFilter) || 0;
-            const maxDistanceMiles = parseFloat(distanceFilter) || Infinity;
             const rating = parseFloat(restaurant.rating) || 0;
         
-            return distanceMiles <= maxDistanceMiles && rating >= minRating;
+            return rating >= minRating;
         });
 
+        console.log("Filtered restaurants:", filteredRestaurants);
         return filteredRestaurants;
     } catch (error) {
         console.error("Error fetching restaurants:", error);
@@ -111,17 +124,6 @@ async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
 function createRestaurantCard(restaurant, imageUrl) {
     const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
     const priceLevel = '$'.repeat(restaurant.price_level || 0);
-
-    const lat = restaurant.geometry?.location?.lat;
-    const lng = restaurant.geometry?.location?.lng;
-        
-    if (lat === undefined || lng === undefined) {
-        console.error("Latitude or longitude is undefined for restaurant:", restaurant.name);
-        return '';
-    }
-    
-    const numLat = Number(lat);
-    const numLng = Number(lng);
     
     const cardHTML = `
         <div class="restaurant-card" data-place-id="${restaurant.place_id}">
@@ -145,14 +147,6 @@ function createRestaurantCard(restaurant, imageUrl) {
                 <div class="details-content">
 
                 </div>
-                <div class="action-buttons">
-                    <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${numLat},${numLng}" target="_blank">
-                        <svg viewBox="0 0 24 24" class="icon">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        DIRECTIONS
-                    </a>
-                </div>
             </div>
         </div>
     `;
@@ -175,13 +169,15 @@ async function expandRestaurantCard(card) {
             console.log('Fetching details for place:', placeId);
             detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Loading details...</p>';
             try {
-                // Fetch logic here (commented out for now)
+                // Fetch logic here (replace with your API endpoint)
                 const response = await fetch(`/api/place-details/?place_id=${placeId}`);
                 const details = await response.json();
+                const formattedAddress = encodeURIComponent(details.formatted_address || '');
 
                 console.log('Details:', details);
-                
-                detailsContent.innerHTML = `
+
+                // Building the content
+                let contentHTML = `
                     <div class="info-section">
                         <div class="contact-section">
                             <div>
@@ -200,9 +196,47 @@ async function expandRestaurantCard(card) {
                                 ${details.opening_hours ? details.opening_hours.weekday_text.map(day => `<li>${day}</li>`).join('') : '<li>N/A</li>'}
                             </ul>
                         </div>
+                        <div class="action-buttons">
+                        <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${formattedAddress}" target="_blank">
+                            <svg viewBox="0 0 24 24" class="icon">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            DIRECTIONS
+                        </a>
                     </div>
-
+                    </div>
                 `;
+
+                // Check if there are reviews
+                if (details.reviews && details.reviews.length > 0) {
+                    const reviews = details.reviews.slice(0, 3);  // Get first 3 reviews or less
+
+                    contentHTML += `
+                        <div class="reviews-section">
+                            <h4>Reviews</h4>
+                            <ul class="reviews-list">
+                    `;
+
+                    reviews.forEach(review => {
+                        const formattedTime = new Date(review.time * 1000).toLocaleDateString();
+                        contentHTML += `
+                            <li class="review-item">
+                                <p><strong>${review.author_name}</strong> <span class="review-rating">Rating: ${'★'.repeat(review.rating)}</span></p>
+                                <p class="review-text">"${review.text}"</p>
+                                <p class="review-time">${formattedTime}</p>
+                            </li>
+                        `;
+                    });
+
+                    contentHTML += `
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                // Update the inner HTML with the new content
+                detailsContent.innerHTML = contentHTML;
+
             } catch (error) {
                 detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Failed to load details. Please try again.</p>';
                 console.error('Error fetching place details:', error);
@@ -312,22 +346,6 @@ function addMarker(restaurant, imageUrl) {
 function clearMarkers() {
     markers.forEach(marker => marker.setMap(null));
     markers = [];
-}
-
-function calculateDistance(lat1, lng1, lat2, lng2){
-    const R = 6371; 
-    const dLat = degreesToRadians(lat2 - lat1);
-    const dLng = degreesToRadians(lng2 - lng1);
-    const a = 
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) * 
-        Math.sin(dLng / 2) * Math.sin(dLng / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; 
-}
-
-function degreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
 }
 
 function adjustContainerHeights() {

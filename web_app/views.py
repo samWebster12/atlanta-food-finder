@@ -12,7 +12,7 @@ from asgiref.sync import sync_to_async
 import requests
 
 
-USE_DUMMY_DATA = True
+USE_DUMMY_DATA = False
 
 @require_GET
 async def search_restaurants(request):
@@ -131,7 +131,7 @@ async def get_place_details(request):
         return JsonResponse({'error': 'place_id is required'}, status=400)
 
     api_key = settings.GOOGLE_MAPS_API_KEY
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
