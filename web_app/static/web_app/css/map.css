@@ -283,7 +283,6 @@ select {
 
 
 .restaurant-card {
-    display: flex;
     background-color: #6e2323;
     border-radius: 20px;
     overflow: hidden;
@@ -292,6 +291,12 @@ select {
     max-width: 600px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restaurant-summary {
+    display: flex;
 }
 
 .restaurant-image {
@@ -342,6 +347,32 @@ select {
     font-weight: bold;
 }
 
+.restaurant-details {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.restaurant-card.expanded .restaurant-details {
+    max-height: 500px; /* Adjust this value as needed */
+    padding: 20px;
+}
+
+.details-content {
+    margin-bottom: 15px;
+}
+
+.details-content p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.details-content ul {
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
 .action-buttons {
     display: flex;
     justify-content: space-around;
@@ -384,6 +415,99 @@ select {
 .action-btn.directions:hover .icon {
     fill: rgba(255, 255, 255, 0.8);
 }
+
+@media (max-width: 768px) {
+    .restaurant-summary {
+        flex-direction: column;
+    }
+
+    .restaurant-image {
+        max-width: 100%;
+    }
+
+    .restaurant-info {
+        padding: 15px;
+    }
+
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        flex: 1 0 33%;
+        margin-bottom: 10px;
+    }
+}
+
+.info-section {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.info-section h4 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-section p,
+.info-section ul {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.info-section a {
+    color: #FFD700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-section a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.contact-section,
+.address-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.contact-section div,
+.address-section div {
+    flex: 1;
+}
+
+ul.hours-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.hours-list li {
+    margin-bottom: 5px;
+}
+
+ul.hours-list li::before {
+    content: "🕒";
+    margin-right: 5px;
+    color: #FFD700;
+}
+
+.info-section:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 
 /* Results Styles */
 .results-header {

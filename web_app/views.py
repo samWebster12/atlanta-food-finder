@@ -12,7 +12,7 @@ from asgiref.sync import sync_to_async
 import requests
 
 
-USE_DUMMY_DATA = False
+USE_DUMMY_DATA = True
 
 @require_GET
 async def search_restaurants(request):
