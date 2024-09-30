@@ -1,0 +1,3 @@
+Features to Add:
+- Change map view to restaurant when user clicks on result card
+- Add Google Reviews
