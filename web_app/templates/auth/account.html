@@ -4,19 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Food Finder</title>
+    <title>Atlanta Food Finder - Account</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
-    <script src="{% static 'web_app/js/maps.js' %}" defer></script>
-    <script src="{% static 'web_app/js/script.js' %}" defer></script>
+</head>
 <body>
-    <!-- Header at the top -->
     <header>
         AtlantaFoodFinder
     </header>
 
     <div class="centered-box">
         <a href="{% url 'index' %}" class="back-arrow">&#8592;</a>
-        <div class="box-content"></div>
+        <div class="box-content">
             <h2>One step closer...</h2>
             <h2 class="bold-text">Already have an account?</h2>
             <a href="{% url 'login' %}">

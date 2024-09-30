@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Atlanta Food Finder{% endblock %}
+
+{% block back_arrow %}
+<a href="{% url 'account' %}" class="back-arrow">&#8592;</a>
+{% endblock %}
+
+{% block content %}
+<div class="centered-box">
+    <h2 class="bold-text">Login</h2>
+    <form method="post" id="login-form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="login-field">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="choice-button" id="login-button">Log In</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'signup' %}" class="button">Sign up here</a></p>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-field input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .centered-box {
+        text-align: center;
+    }
+    .bold-text {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
