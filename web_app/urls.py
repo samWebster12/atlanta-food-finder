@@ -15,4 +15,7 @@ urlpatterns = [
     path('api/place-details/', views.get_place_details, name='place_details'),
     path('api/proxy-photo/', views.proxy_place_photo, name='proxy_place_photo'),
     path('map/', views.map_view, name='map'),
+    path('create-account/', views.create_account, name='create'),
+    path('home/', views.back_home, name='home'),
+    path('profile/', views.profile, name='profile')
 ]
