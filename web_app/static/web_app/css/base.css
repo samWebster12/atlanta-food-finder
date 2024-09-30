@@ -153,6 +153,7 @@ header {
 	width: 75%;
 	transition: .2s;
     text-align: center;
+    color: #fcf3e3d0;
 }
 
 .login-input::placeholder {
