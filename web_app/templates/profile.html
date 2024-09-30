@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlanta Food Finder</title>
+    <link rel="stylesheet" href="{% static 'web_app/css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="{% static 'web_app/js/maps.js' %}" defer></script>
+    <script src="{% static 'web_app/js/script.js' %}" defer></script>
+</head>
+<body>
+
+    <!-- Header at the top -->
+    <header>
+        AtlantaFoodFinder
+    </header>
+
+    <a href="{% url 'profile' %}">
+        <button class="profile-button">
+            <i class="fas fa-user-circle"></i> 
+            Profile
+        </button>
+    </a>
+
+    <div class="search-container">
+        <div class="search-group">
+            <label for="search-by">Search By</label>
+            <select class="dropdown" id="search-by" name="search-by">
+                <option value="restaurant-name">Restaurant name</option>
+                <option value="restaurant-type">Cuisine type</option>
+            </select>
+        </div>
+        <div class="search-input-group">
+            <input type="text" class="search-input" placeholder="Search for restaurants...">
+            <button class="search-button">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div class="filter-group">
+            <label for="filter-by">Filter By</label>
+            <select class="dropdown" id="filter-by" name="filter-by">
+                <option value="ratings">Ratings</option>
+                <option value="distance">Distance</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Your Profile</h1>
+        <div class="profile-section"> 
+            <div class="image-section">
+                <i id= icon class="fas fa-user-circle"></i> 
+                <p>username</p>
+            </div>
+            <div class="info-section">
+                <p>Using Atlanta Food Finder since... September 2024</p>
+                <button class="view-favorites">
+                    View<br>Favorites
+                    <i class="fa fa-bookmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

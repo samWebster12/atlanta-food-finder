@@ -90,3 +90,6 @@ def create_account(request):
 
 def back_home(request):
     return render(request, 'index.html')
+
+def profile(request):
+    return render(request, 'profile.html')

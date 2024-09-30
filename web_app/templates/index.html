@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="{% static 'web_app/js/maps.js' %}" defer></script>
     <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
@@ -15,6 +16,13 @@
     <header>
         AtlantaFoodFinder
     </header>
+
+    <a href="{% url 'login' %}">
+        <button class="profile-button">
+            <i class="fas fa-user-circle"></i> 
+            Profile
+        </button>
+    </a>
 
     <!-- Middle text content -->
     <div class="content">
