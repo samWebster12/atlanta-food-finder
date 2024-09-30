@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Webpage</title>
-    <link rel="stylesheet" href="{% static 'web_app/css/map2.css' %}">
+    <link rel="stylesheet" href="{% static 'web_app/css/map.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk" defer></script>
     <script src="{% static 'web_app/js/maps.js' %}" defer></script>
-    <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
 <body>
     <header class="header">
@@ -26,16 +25,9 @@
 
     <div class="search-container">
         <div class="search-content">
-            <div class="search-group">
-                <label for="search-by">Search By</label>
-                <select id="search-by" name="search-by">
-                    <option value="restaurant-name">Name</option>
-                    <option value="restaurant-type">Type</option>
-                </select>
-            </div>
             <div class="search-input-group">
-                <input type="text" class="search-input" placeholder="Search for restaurants...">
-                <button class="search-button">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for restaurants...">
+                <button id="search-button" class="search-button">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -43,10 +35,24 @@
                 </button>
             </div>
             <div class="filter-group">
-                <label for="filter-by">Filter By</label>
-                <select id="filter-by" name="filter-by">
-                    <option value="ratings">Ratings</option>
-                    <option value="distance">Distance</option>
+                <select id="search-by" name="search-by">
+                    <option value="name">Search by Name</option>
+                    <option value="cuisine-type">Search by Cuisine Type</option>
+                    <option value="location">Search by Location</option>
+                </select>
+                <select id="ratings-filter" name="ratings-filter">
+                    <option value="">Filter by Rating</option>
+                    <option value="4.5">4.5+ stars</option>
+                    <option value="4">4+ stars</option>
+                    <option value="3.5">3.5+ stars</option>
+                    <option value="3">3+ stars</option>
+                </select>
+                <select id="distance-filter" name="distance-filter">
+                    <option value="">Filter by Distance</option>
+                    <option value="5">Within 5 miles</option>
+                    <option value="10">Within 10 miles</option>
+                    <option value="20">Within 20 miles</option>
+                    <option value="30">Within 30 miles</option>
                 </select>
             </div>
         </div>
@@ -54,121 +60,11 @@
 
     <div class="bottom-content">
         <div class="results">
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="restaurant-card">
-                <div class="restaurant-image">
-                    <img src="{% static 'web_app/images/pasta_placeholder.jpg' %}" alt="Olive Garden Pasta">
-                </div>
-                <div class="restaurant-info">
-                    <h2 class="restaurant-name">Olive Garden <span class="price">$$</span></h2>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-text">4.2/5.0 (173 Reviews)</span>
-                    </div>
-                    <p class="address">123 Any Street, Atlanta</p>
-                    <p class="hours"><span class="open">Open</span> Closes 11pm</p>
-                    <p class="restaurant-type">Chain Italian Restaurant</p>
-                    <div class="action-buttons">
-                        <button class="action-btn order">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-                            </svg>
-                            ORDER
-                        </button>
-                        <button class="action-btn directions">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </button>
-                        <button class="action-btn website">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                            </svg>
-                            WEBSITE
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <h1 class="results-header">Results</h1>
+            <!-- Restaurant cards will be dynamically inserted here -->
         </div>
-    
-        
-        <div class="map" id="map">
-    
-        </div> 
-    </div> 
+        <div class="map" id="map"></div>
+    </div>
 
 </body>
 </html>
