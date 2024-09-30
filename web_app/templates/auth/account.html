@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Food Finder - Account</title>
+    <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <body>
+    <!-- Header at the top -->
     <header>
         AtlantaFoodFinder
     </header>
 
     <div class="centered-box">
         <a href="{% url 'index' %}" class="back-arrow">&#8592;</a>
-        <div class="box-content">
+        <div class="box-content"></div>
             <h2>One step closer...</h2>
             <h2 class="bold-text">Already have an account?</h2>
             <a href="{% url 'login' %}">
                 <button class="choice-button">Yes, take me to login</button>
             </a>
-            <a href="{% url 'create' %}">
+            <a href="{% url 'signup' %}">
                 <button class="choice-button">No, create an account</button>
             </a>
         </div>

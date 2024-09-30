@@ -4,6 +4,7 @@ body {
     height: 100vh;
     background-size: 250%;
     background-position: 45% 55%;
+    background-image: url('../images/restaurant.png');
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -21,6 +22,7 @@ header {
     color: #fcf3e3;
     font-family: 'Literata', serif;
     font-style: italic;
+    background-color: #5e657bd0;
 }
 
 .content {
@@ -46,6 +48,7 @@ header {
     transition: background-color 0.3s ease;
     border: none;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .button:hover {
@@ -102,14 +105,13 @@ header {
     font-size: 10px;
     color: #fcf3e3;
     font-family: 'Literata', serif;
-    width: 80%;
     max-width: 300px;
 }
 
 .box-content {
     display: flex;               
     flex-direction: column;      
-    align-items: center;        
+    align-items: center;
 }
 
 
@@ -145,7 +147,7 @@ header {
 	padding: 10px;
     font-size: 13px;
     font-family: 'Literata', serif;
-	width: 75%;
+	width: 90%;
 	transition: .2s;
     text-align: center;
     color: #fcf3e3d0;
