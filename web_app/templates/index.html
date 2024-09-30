@@ -22,8 +22,7 @@
                     <button type = 'submit' class = 'btn'>Log Out</button>
                 </form>
             {% else %}
-                <button id="authButton" class="btn">Login</button>
-<!--                <a href = "{% url 'login' %}">Log In</a>-->
+                <a href="{% url 'account' %}" class="btn">Login/Sign Up</a>
             {% endif %}
         </div>
     </header>

@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
+from django.urls import reverse_lazy
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, forms
 from django.contrib.auth.models import User
+from django import forms
 import json
 import requests
 USE_DUMMY_DATA = True
@@ -16,40 +20,40 @@ def index(request):
 def map(request):
     return render(request, 'map.html')
 @csrf_exempt
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        username = data['username']
-        password = data['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'Success': True})
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': True})
+                return redirect('index')
         else:
-            return JsonResponse({'Success': False})
-    return render(request, 'index.html', {'action', 'login'})
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = AuthenticationForm()
+    return render(request, 'auth/login.html', {'form': form})
 
 
 @csrf_exempt
-def logout(request):
+def logout_view(request):
     logout(request)
-    return JsonResponse({True})
+    return redirect('index')
 
 
-@csrf_exempt
-def signup(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        username = data['username']
-        password = data['password']
-        email = data['email']
-        try:
-            user = User.objects.create_user(username, email, password)  # Make User model
-            login(request, user)
-            return JsonResponse({'Success': True})
-        except:
-            return JsonResponse({'Success': False})
-    return render(request, 'index.html', {'action', 'signup'})
+def ask_account(request):
+    return render(request, 'auth/account.html')
+
+def create_account(request):
+    return render(request, 'auth/acc-create.html')
+
+def back_home(request):
+    return render(request, 'index.html')
 
 
 @require_GET
@@ -116,14 +120,21 @@ def get_place_details(request):
     else:
         return JsonResponse({'error': 'API request failed'}, status=response.status_code)
 
-    def login_view(request):
-        return render(request, 'login.html')
 
-    def ask_account(request):
-        return render(request, 'account.html')
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label = 'Email')
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
 
-    def create_account(request):
-        return render(request, 'acc-create.html')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'login-input'
+            field.widget.attrs['placeholder'] = field.label
 
-    def back_home(request):
-        return render(request, 'index.html')
+
+class SignUpView(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'auth/signup.html'

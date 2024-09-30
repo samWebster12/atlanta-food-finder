@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlanta Food Finder - Create Account</title>
+    <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
+</head>
+<body>
+    <header>
+        AtlantaFoodFinder
+    </header>
+
+    <div class="centered-box">
+        <a href="{% url 'account' %}" class="back-arrow">&#8592;</a>
+        <div class="box-content">
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button id="create-account-button" class="choice-button" type="submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

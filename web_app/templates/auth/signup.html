@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Atlanta Food Finder{% endblock %}
+
+{% block content %}
+<div class="centered-box">
+    <a href="{% url 'account' %}" class="back-arrow">&#8592;</a>
+    <h2>Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="login-field">
+            {{ form.username }}
+        </div>
+        <div class="login-field">
+            {{ form.email }}
+        </div>
+        <div class="login-field">
+            {{ form.password1 }}
+        </div>
+        <div class="login-field">
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="choice-button">Create Account</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}" class="button">Login here</a></p>
+</div>
+{% endblock %}
