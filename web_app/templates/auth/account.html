@@ -1,29 +1,28 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Food Finder - Account</title>
-    <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
-</head>
-<body>
-    <header>
-        AtlantaFoodFinder
-    </header>
+{% extends "base.html" %}
 
-    <div class="centered-box">
-        <a href="{% url 'index' %}" class="back-arrow">&#8592;</a>
-        <div class="box-content">
-            <h2>One step closer...</h2>
-            <h2 class="bold-text">Already have an account?</h2>
-            <a href="{% url 'login' %}">
-                <button class="choice-button">Yes, take me to login</button>
-            </a>
-            <a href="{% url 'create' %}">
-                <button class="choice-button">No, create an account</button>
-            </a>
-        </div>
-    </div>
-</body>
-</html>
+{% block title %}Login - Atlanta Food Finder{% endblock %}
+
+{% block back_arrow %}
+{% endblock %}
+
+{% block content %}
+<h2>One step closer...</h2>
+<h2 class="bold-text">Already have an account?</h2>
+<a href="{% url 'login' %}">
+    <button class="choice-button">Yes, take me to login</button>
+</a>
+<a href="{% url 'signup' %}">
+    <button class="choice-button">No, create an account</button>
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .centered-box {
+        width: 80%;
+    }
+    .choice-button {
+        width: 100%;
+    }
+</style>
+{% endblock %}
