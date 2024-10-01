@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="centered-box">
-    <h2 class="bold-text">Login</h2>
-    <form method="post" id="login-form">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="login-field">
-                {{ field }}
-            </div>
-        {% endfor %}
-        <button type="submit" class="choice-button" id="login-button">Log In</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'signup' %}" class="button">Sign up here</a></p>
-</div>
+<h2 class="bold-text">Login</h2>
+<form method="post" id="login-form">
+    {% csrf_token %}
+
+        <div class="login-field">
+            {{ form.username }}
+        </div>
+
+        <div class="login-field">
+            {{ form.password }}
+        </div>
+
+    <button type="submit" class="choice-button" id="login-button">Log In</button>
+</form>
+<p>Don't have an account? <a href="{% url 'signup' %}" class="button">Sign up here</a></p>
 {% endblock %}
 
 {% block extra_css %}
-<style>
+<!-- <style>
     .login-field input {
         width: 100%;
         margin-bottom: 10px;
@@ -27,5 +29,5 @@
     .bold-text {
         font-weight: bold;
     }
-</style>
+</style> -->
 {% endblock %}
