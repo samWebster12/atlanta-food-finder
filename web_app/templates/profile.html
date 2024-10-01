@@ -7,6 +7,7 @@
     <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/profile.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="{% static 'web_app/js/maps.js' %}" defer></script>
     <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
@@ -25,14 +26,6 @@
     </a>
 
     <div class="search-container">
-        <div class="search-group">
-            <label for="search-by">Search By</label>
-            <select class="dropdown" id="search-by" name="search-by">
-                <option value="restaurant-name">Restaurant name</option>
-                <option value="cuisine-type">Cuisine type</option>
-                <option value="location">Location</option>
-            </select>
-        </div>
         <div class="search-input-group">
             <input type="text" class="search-input" placeholder="Search for restaurants...">
             <button class="search-button">
@@ -40,9 +33,24 @@
             </button>
         </div>
         <div class="filter-group">
+            <label for="search-by">Search By</label>
+            <select class="dropdown" id="search-by" name="search-by">
+                <option value="restaurant-name">Restaurant name</option>
+                <option value="cuisine-type">Cuisine type</option>
+                <option value="location">Location</option>
+            </select>
+        </div>
+        <div class="filter-group">
             <label for="filter-by">Filter By</label>
             <select class="dropdown" id="filter-by" name="filter-by">
                 <option value="ratings">Ratings</option>
+                <option value="distance">Distance</option>
+            </select>
+        </div>
+        <div class="filter-group" id="distance-filter">
+            <label for="filter-by">Filter By</label>
+            <select class="dropdown" id="filter-by" name="filter-by">
+                <option value="ratings">Distance</option>
                 <option value="distance">Distance</option>
             </select>
         </div>
@@ -53,7 +61,7 @@
         <div class="profile-section"> 
             <div class="image-section">
                 <i id= icon class="fas fa-user-circle"></i> 
-                <p>username</p>
+                <p>{{ user.username }}</p>
             </div>
             <div class="info-section">
                 <p><b>Using Atlanta Food Finder since...</b> September 2024</p>

@@ -22,6 +22,10 @@ body {
     padding: 0 20px;
 }
 
+.header-content i {
+    margin-right: 8px;
+}
+
 .site-title {
     margin: 0;
     font-size: 28px;
