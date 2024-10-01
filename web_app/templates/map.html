@@ -14,15 +14,12 @@
         <div class="header-content">
             <h1 class="site-title">Atlanta Food Map</h1>
             {% if user.is_authenticated %}
-                <button class="profile-button">
-                    <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
+                <a href="{% url 'profile' %}" class="profile-button">
+                    <i class="fas fa-user-circle"></i>
                     Profile
-                </button>
+                </a>
             {% else %}
-                <div class="auth-buttons" >
+                <div class="auth-buttons">
                     <a href="{% url 'login' %}" class="auth-button">Login</a>
                     <a href="{% url 'signup' %}" class="auth-button">Sign Up</a>
                 </div>

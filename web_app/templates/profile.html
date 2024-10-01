@@ -11,19 +11,13 @@
     <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
 <body>
-
-    <!-- Header at the top -->
     <header>
-        AtlantaFoodFinder
-    </header>
-
-    <a href="{% url 'profile' %}">
-        <button class="profile-button">
-            <i class="fas fa-user-circle"></i> 
+        User Profile
+        <a href="{% url 'profile' %}" class="profile-button">
+            <i class="fas fa-user-circle"></i>
             Profile
-        </button>
-    </a>
-
+        </a>
+    </header>
     <div class="search-container">
         <div class="search-group">
             <label for="search-by">Search By</label>

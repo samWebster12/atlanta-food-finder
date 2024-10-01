@@ -7,44 +7,22 @@
     <title>{% block title %}Atlanta Food Finder{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <header class="header">
-        <div class="auth-buttons">
-            {% if user.is_authenticated %}
-                <button class="profile-button">
-                    <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    Profile
-                </button>
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="auth-button">Log Out</button>
-                </form>
-            {% endif %}
-        </div>
+        <h1 class="title">AtlantaFoodFinder</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="profile-button">
+                <i class="fas fa-user-circle"></i>
+                Profile
+            </a>
+        {% endif %}
     </header>
 
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <div class="centered-box">
-        {% block back_arrow %}{% endblock %}
-        <div class="box-content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
+    {% block content %}
+    {% endblock %}
 
     {% block extra_js %}{% endblock %}
 </body>
