@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -178,7 +179,8 @@ async def get_place_details(request):
             if response.status == 200:
                 data = await response.json()
                 if data['status'] == 'OK':
-                    return JsonResponse(data['result'])
+                    result = JsonResponse(data['result'])
+                    return JsonResponse(result)
                 else:
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
             else:
@@ -227,5 +229,6 @@ class SignUpView(generic.CreateView):
         login(self.request, self.object)
         messages.success(self.request, "Account has been created successfully. Welcome!")
         return response
+@login_required
 def profile(request):
     return render(request, 'profile.html')
