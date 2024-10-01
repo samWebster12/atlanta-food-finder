@@ -1,5 +1,6 @@
 let map;
 let markers = [];
+let favoriteRestaurants = [];
 
 //Atlanta
 let userLocation = {
@@ -10,8 +11,17 @@ let isLoggedIn = false;
 
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
+    loadFavorites();
     initEventListeners();
 });
+
+function loadFavorites() {
+    const storedFavorites = localStorage.getItem('favoriteRestaurants');
+    if (storedFavorites) {
+        favoriteRestaurants = JSON.parse(storedFavorites);
+        console.log('Favorites loaded:', favoriteRestaurants);
+    }
+}
 
 function initMap() {
     const atlanta = { lat: 33.7490, lng: -84.3880 };
@@ -142,7 +152,7 @@ function createRestaurantCard(restaurant, imageUrl) {
                         ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
                     <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
                 </div>
-                <div class="bookmark" onclick="toggleBookmark(this)">
+                <div class="bookmark" onclick="addFavorite(this, '${restaurant.place_id}', '${restaurant.name}')">
                     <i class="far fa-bookmark"></i>
                 </div>
             </div>
@@ -153,20 +163,29 @@ function createRestaurantCard(restaurant, imageUrl) {
             </div>
         </div>
     `;
-
+    
     return cardHTML;
 }
 
-function toggleBookmark(bookmarkElement) {
+function addFavorite(bookmarkElement, placeId, name) {
+    console.log(`Toggling favorite for restaurant: ${name}`);
     const icon = bookmarkElement.querySelector('i');
 
     if (icon.classList.contains('far')) {
+        favoriteRestaurants.push(placeId)
         icon.classList.remove('far', 'fa-bookmark');
         icon.classList.add('fas', 'fa-bookmark');
+        console.log(`Added ${name} to favorites.`);
     } else {
+        const index = favoriteRestaurants.indexOf(placeId);
+        if (index > -1) {
+            favoriteRestaurants.splice(index, 1);
+        }
         icon.classList.remove('fas', 'fa-bookmark');
         icon.classList.add('far', 'fa-bookmark');
+        console.log(`Removed ${name} from favorites.`);
     }
+    console.log('Current favorites:', favoriteRestaurants);
 }
 
 async function expandRestaurantCard(card) {

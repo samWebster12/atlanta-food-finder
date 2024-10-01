@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -8,8 +8,10 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from django.contrib.auth import authenticate, login, logout, forms
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django import forms
+from .models import FavoriteRestaurant
 from .forms import CustomAuthenticationForm, CustomUserCreationForm
 import json
 import requests
@@ -215,3 +217,20 @@ def profile(request):
 
 def favorites(request):
     return render(request, 'favorites.html')
+
+@login_required
+def add_favorite(request):
+    if request.method == 'POST':
+        restaurant_id = request.POST.get('restaurant_id')
+        restaurant_name = request.POST.get('restaurant_name')
+        
+        # Check if restaurant is already in the user's favorites
+        if FavoriteRestaurant.objects.filter(user=request.user, restaurant_id=restaurant_id).exists():
+            return JsonResponse({'status': 'already_favorited'})
+
+        # Add restaurant to favorites
+        favorite = FavoriteRestaurant(user=request.user, restaurant_id=restaurant_id, restaurant_name=restaurant_name)
+        favorite.save()
+        return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'failed'}, status=400)

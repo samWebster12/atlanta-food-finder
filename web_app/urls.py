@@ -18,5 +18,5 @@ urlpatterns = [
     path('create-account/', views.create_account, name='create'),
     path('home/', views.back_home, name='home'),
     path('profile/', views.profile, name='profile'),
-    path('favorites/', views.favorites, name='favorites')
+    path('favorites/', views.favorites, name='favorites'),
 ]

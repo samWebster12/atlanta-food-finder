@@ -203,7 +203,7 @@ select {
     height: calc(100vh - 150px); /* Adjust 150px based on the height of your header and search container */
 }
 
-.results {
+.results, .favorites{
     flex: 1;
     overflow-y: auto;
     padding-right: 20px;
@@ -222,7 +222,7 @@ select {
         height: auto;
     }
 
-    .results {
+    .results, .favorites{
         max-height: none;
         overflow-y: visible;
         padding-right: 0;
@@ -274,7 +274,7 @@ select {
         flex-direction: column;
     }
 
-    .results {
+    .results, .favorites{
         margin-right: 0;
         margin-bottom: 20px;
     }
@@ -355,7 +355,7 @@ select {
 }
 
 .bookmark:hover {
-    color: #ffd700; /* Change color on hover */
+    color: black; /* Change color on hover */
 }
 
 .rating-text, .address, .hours, .restaurant-type {
@@ -531,7 +531,7 @@ ul.hours-list li::before {
 
 
 /* Results Styles */
-.results-header {
+.results-header, .favorites-header {
     text-align: center;
     color: #6e2323;
     font-size: 24px;

@@ -65,10 +65,13 @@
             </div>
             <div class="info-section">
                 <p><b>Using Atlanta Food Finder since...</b> September 2024</p>
-                <button class="view-favorites">
-                    View<br>Favorites
-                    <i class="fa fa-bookmark"></i>
-                </button>
+                
+                <a href="{% url 'favorites' %}">
+                    <button class="view-favorites">
+                        View<br>Favorites
+                        <i class="fa fa-bookmark"></i>
+                    </button>
+                </a>
             </div>
         </div>
     </div>
