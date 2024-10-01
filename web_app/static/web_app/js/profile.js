@@ -35,7 +35,7 @@ async function initFavorites() {
             const favoriteDetails = await Promise.all(
                 favorites.map(favorite => fetch(`/api/place-details/?place_id=${favorite.place_id}`).then(res => res.json()))
             );
-            
+
             favoriteDetails.forEach(detail => {
                 console.log(detail);
                 const card = createRestaurantCard(detail);
@@ -53,7 +53,7 @@ async function initFavorites() {
 function createRestaurantCard(restaurant) {
     const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
     const priceLevel = '$'.repeat(restaurant.price_level || 0);
-    
+
     const card = document.createElement('div');
     card.className = 'restaurant-card';
     card.innerHTML = `

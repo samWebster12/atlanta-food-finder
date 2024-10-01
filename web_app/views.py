@@ -8,7 +8,7 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth import authenticate, login, logout, forms
 from django.contrib.auth.models import User
 from django import forms
@@ -17,6 +17,8 @@ import json
 import requests
 import aiohttp
 import asyncio
+import ssl
+import certifi
 from asgiref.sync import sync_to_async
 USE_DUMMY_DATA = False
 
@@ -68,7 +70,9 @@ async def search_restaurants(request):
         params = await create_search_params(query, search_by, distance_filter)
         print("Params: ", params)
 
-        async with aiohttp.ClientSession() as session:
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        conn = aiohttp.TCPConnector(ssl=ssl_context)
+        async with aiohttp.ClientSession(connector=conn) as session:
             async with session.get(url, params=params) as response:
                 data = await response.json()
                 results = data.get('results', [])
@@ -120,8 +124,9 @@ async def get_coordinates(location):
         "address": location,
         "key": settings.GOOGLE_MAPS_API_KEY
     }
-    
-    async with aiohttp.ClientSession() as session:
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    conn = aiohttp.TCPConnector(ssl=ssl_context)
+    async with aiohttp.ClientSession(connector=conn) as session:
         try:
             async with session.get(base_url, params=params) as response:
                 data = await response.json()
@@ -158,21 +163,12 @@ def proxy_place_photo(request):
     
     url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth={max_width}&photoreference={photo_reference}&key={settings.GOOGLE_MAPS_API_KEY}"
     
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     
     if response.status_code == 200:
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
-    
-def get_favorites(request):
-    user = request.user
-    if not user.is_authenticated:
-        return JsonResponse({'error': 'User is not authenticated'}, status=401)
-
-    username = request.user.username
-
-    return JsonResponse({"favorites": [{"place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk"}]})
 
 def get_profile(request):
     user = request.user
@@ -191,13 +187,17 @@ async def get_place_details(request):
     api_key = settings.GOOGLE_MAPS_API_KEY
     url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website,price_level,vicinity,photo,type&key={api_key}"
 
-    async with aiohttp.ClientSession() as session:
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    conn = aiohttp.TCPConnector(ssl=ssl_context)
+    async with aiohttp.ClientSession(connector=conn) as session:
         async with session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 if data['status'] == 'OK':
                     result = JsonResponse(data['result'])
-                    return JsonResponse(result)
+                    # if request.user.is_authenticated:
+                    #     result['is_favorite'] = await sync_to_async(Favorite.objects.filter(user=request.user, place_id=place_id).exists)()
+                    return result
                 else:
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
             else:
