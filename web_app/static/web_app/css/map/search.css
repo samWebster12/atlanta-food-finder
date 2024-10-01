@@ -165,10 +165,3 @@ select:hover, select:focus {
         width: 100%;
     }
 }
-
-@media (max-width: 768px) {
-
-    select {
-        
-    }
-}
