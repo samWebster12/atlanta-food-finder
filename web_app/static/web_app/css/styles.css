@@ -95,13 +95,6 @@ select {
     gap: 1rem;
 }
 
-.restaurant-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 1rem;
-    border-radius: 4px;
-}
-
 .hidden {
     display: none;
 }

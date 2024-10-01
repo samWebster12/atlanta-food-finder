@@ -9,6 +9,7 @@ let userLocation = {
 let isLoggedIn = false;
 
 document.addEventListener('DOMContentLoaded', function() {
+    
     initMap();
     initEventListeners();
 });
@@ -121,7 +122,7 @@ async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     }
 }
 
-function createRestaurantCard(restaurant, imageUrl) {
+function createRestaurantCard(restaurant) {
     const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
     const priceLevel = '$'.repeat(restaurant.price_level || 0);
     
@@ -129,7 +130,7 @@ function createRestaurantCard(restaurant, imageUrl) {
         <div class="restaurant-card" data-place-id="${restaurant.place_id}">
             <div class="restaurant-summary">
                 <div class="restaurant-image">
-                    <img src="${imageUrl}" alt="${restaurant.name}" onerror="this.src='{% static "web_app/images/pasta_placeholder.jpg" %}'">
+                    <img src="${restaurant.photos && restaurant.photos[0] ? `/api/proxy-photo/?photo_reference=${restaurant.photos[0].photo_reference}` : '/static/web_app/images/pasta_placeholder.jpg'}" alt="${restaurant.name}">
                 </div>
                 <div class="restaurant-info">
                     <h2 class="restaurant-name">${restaurant.name} <span class="price">${priceLevel}</span></h2>
@@ -137,16 +138,14 @@ function createRestaurantCard(restaurant, imageUrl) {
                         <span class="stars">${starRating}</span>
                         <span class="rating-text">${restaurant.rating}/5.0 (${restaurant.user_ratings_total} Reviews)</span>
                     </div>
-                    <p class="address">${restaurant.vicinity}</p>
+                    <p class="address">${restaurant.vicinity || restaurant.formatted_address}</p>
                     <p class="hours"><span class="${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'open' : 'closed'}">
                         ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
                     <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
                 </div>
             </div>
             <div class="restaurant-details" style="display: none;">
-                <div class="details-content">
-
-                </div>
+                <div class="details-content"></div>
             </div>
         </div>
     `;
@@ -164,81 +163,58 @@ async function expandRestaurantCard(card) {
         detailsSection.style.display = 'block';
         card.classList.add('expanded');
 
-        // Fetch and display additional details if not already loaded
         if (!detailsContent.innerHTML.trim()) {
-            console.log('Fetching details for place:', placeId);
-            detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Loading details...</p>';
+            detailsContent.innerHTML = '<p class="loading">Loading details...</p>';
             try {
-                // Fetch logic here (replace with your API endpoint)
                 const response = await fetch(`/api/place-details/?place_id=${placeId}`);
                 const details = await response.json();
                 const formattedAddress = encodeURIComponent(details.formatted_address || '');
 
-                console.log('Details:', details);
-
-                // Building the content
                 let contentHTML = `
-                    <div class="info-section">
-                        <div class="contact-section">
-                            <div>
-                                <h4>Contact</h4>
-                                <p>📞 ${details.formatted_phone_number || 'N/A'}</p>
-                                <p>🌐 ${details.website ? `<a href="${details.website}" target="_blank">Website</a>` : 'N/A'}</p>
-                            </div>
-                            <div>
-                                <h4>Address</h4>
-                                <p>📍 ${details.formatted_address || 'N/A'}</p>
-                            </div>
+                    <div class="details-grid">
+                        <div class="contact-info">
+                            <h3>Contact</h3>
+                            <p><i class="fas fa-phone"></i> ${details.formatted_phone_number || 'N/A'}</p>
+                            <p><i class="fas fa-globe"></i> ${details.website ? `<a href="${details.website}" target="_blank">Website</a>` : 'N/A'}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> ${details.formatted_address || 'N/A'}</p>
                         </div>
-                        <div class="hours-section">
-                            <h4>Hours</h4>
+                        <div class="hours-info">
+                            <h3>Hours</h3>
                             <ul class="hours-list">
                                 ${details.opening_hours ? details.opening_hours.weekday_text.map(day => `<li>${day}</li>`).join('') : '<li>N/A</li>'}
                             </ul>
                         </div>
-                        <div class="action-buttons">
-                        <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${formattedAddress}" target="_blank">
-                            <svg viewBox="0 0 24 24" class="icon">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            DIRECTIONS
-                        </a>
                     </div>
+                    <div class="action-buttons">
+                        <a class="action-btn directions" href="https://www.google.com/maps/dir/?api=1&destination=${formattedAddress}" target="_blank">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </a>
                     </div>
                 `;
 
-                // Check if there are reviews
                 if (details.reviews && details.reviews.length > 0) {
-                    const reviews = details.reviews.slice(0, 3);  // Get first 3 reviews or less
-
                     contentHTML += `
                         <div class="reviews-section">
-                            <h4>Reviews</h4>
-                            <ul class="reviews-list">
-                    `;
-
-                    reviews.forEach(review => {
-                        const formattedTime = new Date(review.time * 1000).toLocaleDateString();
-                        contentHTML += `
-                            <li class="review-item">
-                                <p><strong>${review.author_name}</strong> <span class="review-rating">Rating: ${'★'.repeat(review.rating)}</span></p>
-                                <p class="review-text">"${review.text}"</p>
-                                <p class="review-time">${formattedTime}</p>
-                            </li>
-                        `;
-                    });
-
-                    contentHTML += `
-                            </ul>
+                            <h3>Top Reviews</h3>
+                            <div class="reviews-grid">
+                                ${details.reviews.slice(0, 3).map(review => `
+                                    <div class="review-card">
+                                        <div class="review-header">
+                                            <span class="review-author">${review.author_name}</span>
+                                            <span class="review-rating">${'★'.repeat(review.rating)}</span>
+                                        </div>
+                                        <p class="review-text">"${review.text}"</p>
+                                        <p class="review-time">${new Date(review.time * 1000).toLocaleDateString()}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
                     `;
                 }
 
-                // Update the inner HTML with the new content
                 detailsContent.innerHTML = contentHTML;
-
             } catch (error) {
-                detailsContent.innerHTML = '<p style="text-align: center; color: #FFD700;">Failed to load details. Please try again.</p>';
+                detailsContent.innerHTML = '<p class="error">Failed to load details. Please try again.</p>';
                 console.error('Error fetching place details:', error);
             }
         }
@@ -348,21 +324,6 @@ function clearMarkers() {
     markers = [];
 }
 
-function adjustContainerHeights() {
-    if (window.innerWidth > 768) { // Not mobile
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const searchContainerHeight = document.querySelector('.search-container').offsetHeight;
-        const bottomContent = document.querySelector('.bottom-content');
-        const availableHeight = window.innerHeight - headerHeight - searchContainerHeight;
-        bottomContent.style.height = `${availableHeight}px`;
-    } else {
-        document.querySelector('.bottom-content').style.height = 'auto';
-    }
-}
-
-// Call on page load and window resize
-window.addEventListener('load', adjustContainerHeights);
-window.addEventListener('resize', adjustContainerHeights);
 
 // Fallback: If Google Maps API is loaded after our script
 window.initMap = initMap;
