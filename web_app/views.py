@@ -227,3 +227,5 @@ class SignUpView(generic.CreateView):
         login(self.request, self.object)
         messages.success(self.request, "Account has been created successfully. Welcome!")
         return response
+def profile(request):
+    return render(request, 'profile.html')

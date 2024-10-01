@@ -102,6 +102,30 @@ header {
     background-color: #2980b9;
 }
 
+.profile-button {
+    position: absolute; 
+    top: 25px;
+    right: 10px; 
+    background-color: transparent; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    font-size: 20px; 
+    color: #fcf3e3; 
+    cursor: pointer; 
+    font-family: 'Literata', serif;
+    transition: background-color 0.3s ease;
+}
+
+.profile-button i {
+    font-size: 24px;
+    margin-right: 8px; 
+}
+
+.profile-button:hover {
+    color: #cabba0; 
+}
+
 .back-arrow {
     position: absolute;
     top: 20px;
@@ -267,6 +291,7 @@ header {
 	width: 75%;
 	transition: .2s;
     text-align: center;
+    color: #fcf3e3d0;
 }
 
 .login-input::placeholder {
