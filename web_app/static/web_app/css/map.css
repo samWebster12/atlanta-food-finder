@@ -196,7 +196,7 @@ select {
 
 .bottom-content {
     display: flex;
-    height: calc(100vh - 150px); /* Adjust 150px based on the height of your header and search container */
+    height: calc(100vh - 150px);
 }
 
 .results {
@@ -208,7 +208,7 @@ select {
 
 .map {
     flex: 1;
-    min-width: 300px; /* Adjust as needed */
+    min-width: 300px;
     height: 100%;
 }
 
@@ -621,4 +621,24 @@ select:hover, select:focus {
 .review-time {
     font-size: 12px;
     color: #ccc;
+}
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-button {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.auth-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }

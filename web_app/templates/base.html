@@ -10,17 +10,33 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-     <header>
-        <nav>
+    <header class="header">
+        <div class="auth-buttons">
             {% if user.is_authenticated %}
-                <span>Welcome, {{ user.username }}!</span>
-                <form method="post" action="{% url 'logout' %}">
+                <button class="profile-button">
+                    <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Profile
+                </button>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn">Log Out</button>
+                    <button type="submit" class="auth-button">Log Out</button>
                 </form>
             {% endif %}
-        </nav>
+        </div>
     </header>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="centered-box">
         {% block back_arrow %}{% endblock %}

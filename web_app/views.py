@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -182,6 +183,18 @@ async def get_place_details(request):
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
             else:
                 return JsonResponse({'error': 'API request failed'}, status=response.status)
+def create_user(username, email, password):
+    user = User.objects.create_user(username=username, email=email, password=password)
+    return user
+
+def get_all_users():
+    return User.objects.all()
+
+def get_user_by_username(username):
+    try:
+        return User.objects.get(username=username)
+    except User.DoesNotExist:
+        return None
 
 # Synchronous views
 def index(request):
@@ -208,3 +221,9 @@ class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'auth/signup.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        messages.success(self.request, "Account has been created successfully. Welcome!")
+        return response

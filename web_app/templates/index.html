@@ -7,85 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Food Finder</title>
     <link rel="stylesheet" href="{% static 'web_app/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'web_app/css/landing.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk" defer></script>
     <script src="{% static 'web_app/js/maps.js' %}" defer></script>
     <script src="{% static 'web_app/js/script.js' %}" defer></script>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Atlanta Food Finder</h1>
+    <header class="header">
+        <h1 class="title">AtlantaFoodFinder</h1>
+        <div class="auth-buttons">
             {% if user.is_authenticated %}
-                Welcome, {{ user.username }}!
-                <form action = "{% url 'logout' %}" method = "post">
+                <span>Welcome, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button type = 'submit' class = 'btn'>Log Out</button>
+                    <button type="submit" class="auth-button">Log Out</button>
                 </form>
             {% else %}
-                <a href="{% url 'account' %}" class="btn">Login/Sign Up</a>
+                <a href="{% url 'login' %}" class="auth-button">Login</a>
+                <a href="{% url 'signup' %}" class="auth-button">Sign Up</a>
             {% endif %}
         </div>
     </header>
-
-    <main class="container">
-        <section class = "content">
-        {% if user.is_authenticated %}
-            Welcome back! Ready to discover more great spots? <a href="{% url 'search_restaurants' %}">Start Exploring.</a>
-        {% else %}
-            Helping you discover your<br>new favorite spot.
-            <div id="authForm" style="display: none;">
-            <h2 id="authTitle"></h2>
-            <form method = "post" id="authFormElement">
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit">Submit</button>
-            </form>
-            <p id="authError"></p>
-        </div>
-        {% endif %}
-        </section>
-        <section id="search-section">
-            <h2>Search Restaurants</h2>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search...">
-                <button id="searchButton" class="btn" onclick="searchRestaurants()">Search</button>
-            </div>
-            <div class="filters">
-                <select id="ratingFilter">
-                    <option value="">Filter by rating</option>
-                    <option value="4">4+ stars</option>
-                    <option value="3">3+ stars</option>
-                    <option value="2">2+ stars</option>
-                </select>
-                <select id="distanceFilter">
-                    <option value="">Filter by distance</option>
-                    <option value="1">Within 1 mile</option>
-                    <option value="5">Within 5 miles</option>
-                    <option value="10">Within 10 miles</option>
-                </select>
-            </div>
-        </section>
-
-        <section id="map-section">
-            <div id="map" style="height: 500px; width: 100%;"></div>
-        </section>
-
-        <section id="results-section">
-            <h2>Search Results</h2>
-            <div id="restaurantList"></div>
-        </section>
-
-        <section id="favorites-section" class="hidden">
-            <h2>Your Favorites</h2>
-            <div id="favoritesList"></div>
-        </section>
-
-        <section id="profile-section" class="hidden">
-            <h2>Your Profile</h2>
-            <div id="profileInfo"></div>
-        </section>
+    <main class="content">
+        <h2 class="main-text">Helping you discover your<br>next favorite spot.</h2>
+        <a href="{% url 'map' %}" class="start-exploring">Start Exploring</a>
     </main>
-
     <footer>
         <div class="container">
             <p>&copy; 2024 Atlanta Food Finder. All rights reserved.</p>

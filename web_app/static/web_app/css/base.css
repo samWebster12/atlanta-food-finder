@@ -48,7 +48,150 @@ header {
     cursor: pointer;
 }
 
+.button:hover {body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: 250%;
+    background-position: 45% 55%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    font-size: 30px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    font-style: italic;
+}
+
+.content {
+    font-size: 40px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    font-weight: bold;
+    text-align: left;
+    margin-top: -20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.button {
+    display: inline-block;
+    padding: 20px 55px;
+    font-size: 20px;
+    font-weight: lighter;
+    font-family: 'Literata', serif;
+    color: #fcf3e3;
+    background-color: #5e657bd0;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
 .button:hover {
+    background-color: #2980b9;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #fcf3e3;
+    font-size: 20px;
+    font-family: 'Literata', serif;
+    font-weight: bold;
+}
+
+.bold-text {
+    font-size: 18px;
+}
+
+/* Centered box styling */
+.centered-box {
+    position: relative;
+    text-align: center;
+    padding: 30px 0px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #5e657bd0;
+    font-size: 10px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    width: 80%;
+    max-width: 300px;
+}
+
+.box-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.choice-button {
+    background-color: #3F0207;
+    border: none;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 60%;
+    max-width: 300px;
+    font-size: 13px;
+    color: #fcf3e3;
+    font-family: 'Literata', serif;
+    transition: background-color 0.3s ease;
+}
+
+.choice-button:hover {
+    background-color: #72020b;
+}
+
+
+.login-field {
+    position: relative;
+}
+
+.login-input {
+	border: none;
+	border-bottom: 1px solid #D1D1D4;
+    margin: 5px 0px 0px;
+	background: none;
+	padding: 10px;
+    font-size: 13px;
+    font-family: 'Literata', serif;
+	width: 75%;
+	transition: .2s;
+    text-align: center;
+}
+
+.login-input::placeholder {
+    text-align: center;
+    color: #fcf3e3d0;
+    font-family: 'Literata', serif;
+}
+
+.login-input:active,
+.login-input:focus,
+.login-input:hover {
+	outline: none;
+    color: #fcf3e3;
+}
+
+#login-button {
+    margin: 25px 0px 5px;
+}
     background-color: #2980b9;
 }
 
@@ -141,4 +284,37 @@ header {
 
 #login-button {
     margin: 25px 0px 5px;
+}
+
+.messages {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 600px;
+}
+
+.message {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #28a745;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.message.error {
+    background-color: #dc3545;
+}
+
+.message.warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.message.info {
+    background-color: #17a2b8;
 }
