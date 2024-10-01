@@ -169,3 +169,8 @@ header {
 #login-button {
     margin: 25px 0px 5px;
 }
+
+#create-account-button {
+    width: 90%;
+    margin-top: 15px;
+}
