@@ -163,6 +163,22 @@ def proxy_place_photo(request):
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
+    
+def get_favorites(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+
+    username = request.user.username
+
+    return JsonResponse({"favorites": [{"place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk"}]})
+
+def get_profile(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+    
+    return JsonResponse({'username': user.username, 'email': user.email})
 
 # Other views
 @require_GET
@@ -172,7 +188,7 @@ async def get_place_details(request):
         return JsonResponse({'error': 'place_id is required'}, status=400)
 
     api_key = settings.GOOGLE_MAPS_API_KEY
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website,price_level,vicinity,photo,type&key={api_key}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
