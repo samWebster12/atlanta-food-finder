@@ -301,6 +301,8 @@ select {
 
 .restaurant-summary {
     display: flex;
+
+    position: relative;
 }
 
 .restaurant-image {
@@ -339,6 +341,21 @@ select {
 .stars {
     color: #ffd700;
     margin-right: 10px;
+}
+
+.bookmark {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    font-size: 24px;
+    color: #ffd700;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    width: 30px;
+}
+
+.bookmark:hover {
+    color: #ffd700; /* Change color on hover */
 }
 
 .rating-text, .address, .hours, .restaurant-type {

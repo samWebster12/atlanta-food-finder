@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Webpage</title>
+    <link rel="stylesheet" href="{% static 'web_app/css/map.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk" defer></script>
+    <script src="{% static 'web_app/js/maps.js' %}" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="site-title">Atlanta Food Finder</h1>
+            <a href="{% url 'profile' %}">
+                <button class="profile-button">
+                    <i class="fas fa-user-circle"></i> 
+                    Profile
+                </button>
+            </a>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-content">
+            <div class="search-input-group">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for restaurants...">
+                <button id="search-button" class="search-button">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="filter-group">
+                <select id="search-by" name="search-by">
+                    <option value="name">Search by Name</option>
+                    <option value="cuisine-type">Search by Cuisine Type</option>
+                    <option value="location">Search by Location</option>
+                </select>
+                <select id="ratings-filter" name="ratings-filter">
+                    <option value="">Filter by Rating</option>
+                    <option value="4.5">4.5+ stars</option>
+                    <option value="4">4+ stars</option>
+                    <option value="3.5">3.5+ stars</option>
+                    <option value="3">3+ stars</option>
+                </select>
+                <select id="distance-filter" name="distance-filter">
+                    <option value="">Filter by Distance</option>
+                    <option value="5">Within 5 miles</option>
+                    <option value="10">Within 10 miles</option>
+                    <option value="20">Within 20 miles</option>
+                    <option value="30">Within 30 miles</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-content">
+        <div class="results">
+            <h1 class="results-header">YOUR FAVORITES</h1>
+            <!-- Restaurant cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+</body>
+</html>

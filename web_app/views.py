@@ -212,3 +212,6 @@ class SignUpView(generic.CreateView):
 
 def profile(request):
     return render(request, 'profile.html')
+
+def favorites(request):
+    return render(request, 'favorites.html')
