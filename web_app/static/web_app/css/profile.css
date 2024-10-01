@@ -55,24 +55,27 @@ header {
     position: absolute;
     top: 120px;
     font-family: 'Literata', serif;
-    font-weight: bold;
     color: #3F0207;
     display: flex;
 
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    width: 100%;
 }
 
-.search-group .filter-group {
-    margin: 20px;
-    flex-direction: column;
+.filter-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0px 5px;
 }
 
 .search-input-group {
-    margin-left: 30px;
+    margin-left: 5%;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .search-input {
@@ -116,7 +119,6 @@ header {
     border-radius: 100px;
     cursor: pointer;
     width: 200px; 
-    max-width: 300px;  
     font-size: 18px;
     color: #fcf3e3;
     font-family: 'Literata', serif;
@@ -125,9 +127,13 @@ header {
     margin-left: 10px;
 }
 
+#distance-filter {
+    margin-left: -15px;
+}
+
 .content {
     width: 100%; 
-    margin-top: -90px;
+    margin-top: -50px;
 }
 
 .content h1 {
@@ -141,6 +147,7 @@ header {
 
 .profile-section {
     display: flex;
+    margin-right: -40px;
 }
 
 .image-section {
@@ -154,7 +161,7 @@ header {
     font-weight: bold;
     color: #3F0207;
     font-family: 'Literata', serif;
-    width: 25%;
+    width: 30%;
     height: 60%;
     text-align: center;
 }
@@ -164,7 +171,7 @@ header {
     color: #3F0207;
     font-family: 'Literata', serif;
     font-size: 20px;
-    width: 50%;
+    width: 60%;
     text-align: center;
     margin-right: 20%;
     display: flex;
@@ -183,7 +190,7 @@ header {
     cursor: pointer;
     width: fit-content; 
     max-width: 300px;  
-    font-size: 20px;
+    font-size: 18px;
     color: #fcf3e3;
     font-family: 'Literata', serif;
     transition: background-color 0.3s ease;
@@ -198,7 +205,8 @@ header {
 }
 
 .view-favorites i {
-    margin-left: 10px;
+    margin-left: 20px;
+    font-size: 25px;
 }
 
 #icon {

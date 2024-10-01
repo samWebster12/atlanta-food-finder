@@ -12,6 +12,7 @@ from django.views.decorators.http import require_GET
 from django.contrib.auth import authenticate, login, logout, forms
 from django.contrib.auth.models import User
 from django import forms
+from .forms import CustomAuthenticationForm, CustomUserCreationForm
 import json
 import requests
 import aiohttp
@@ -22,7 +23,7 @@ USE_DUMMY_DATA = False
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -36,7 +37,7 @@ def login_view(request):
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': False, 'errors': form.errors})
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
     return render(request, 'auth/login.html', {'form': form})
 
 
@@ -163,6 +164,22 @@ def proxy_place_photo(request):
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
+    
+def get_favorites(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+
+    username = request.user.username
+
+    return JsonResponse({"favorites": [{"place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk"}]})
+
+def get_profile(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+    
+    return JsonResponse({'username': user.username, 'email': user.email})
 
 # Other views
 @require_GET
@@ -172,7 +189,7 @@ async def get_place_details(request):
         return JsonResponse({'error': 'place_id is required'}, status=400)
 
     api_key = settings.GOOGLE_MAPS_API_KEY
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website&key={api_key}"
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews,formatted_phone_number,formatted_address,opening_hours,website,price_level,vicinity,photo,type&key={api_key}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
