@@ -1,0 +1,60 @@
+.header-content i {
+    margin-right: 8px;
+}
+
+.profile-button {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.profile-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.profile-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 24px;
+    }
+
+    .profile-button {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}
+
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-button {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.auth-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,46 @@
+/* Style the map controls */
+.gm-style-mtc button,
+.gm-svpc button,
+.gm-fullscreen-control {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+.gm-style-mtc button:hover,
+.gm-svpc button:hover,
+.gm-fullscreen-control:hover {
+    background-color: #8B4513 !important;
+}
+
+/* Style the map info windows */
+.gm-style .gm-style-iw-c {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+    border-radius: 15px;
+    padding: 12px;
+}
+
+.gm-style .gm-style-iw-t::after {
+    background: var(--primary-color) !important;
+}
+
+.gm-style .gm-style-iw-d {
+    overflow: hidden !important;
+}
+
+/* Responsive design for the bottom content */
+@media (max-width: 768px) {
+    .bottom-content {
+        flex-direction: column;
+    }
+
+    .results {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .map {
+        height: 300px;
+        margin-left: 0;
+    }
+}
