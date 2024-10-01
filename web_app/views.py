@@ -200,6 +200,7 @@ async def get_place_details(request):
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
             else:
                 return JsonResponse({'error': 'API request failed'}, status=response.status)
+            
 def create_user(username, email, password):
     user = User.objects.create_user(username=username, email=email, password=password)
     return user

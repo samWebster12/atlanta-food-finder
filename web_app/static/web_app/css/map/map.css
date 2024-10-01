@@ -1,0 +1,20 @@
+main {
+    display: flex;
+    height: 92vh; /* Full height of the viewport */
+}
+
+.left-content {
+    width: 50%;
+}
+
+
+
+@media (max-width: 768px) {
+
+    .right-content {
+        display: none;
+    }
+    .left-content {
+        width: 100%;
+    }
+}
