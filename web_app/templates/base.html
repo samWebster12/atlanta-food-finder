@@ -6,30 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Atlanta Food Finder{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'web_app/css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-     <header>
-        AtlantaFoodFinder
-        <nav>
-            {% if user.is_authenticated %}
-                <span>Welcome, {{ user.username }}!</span>
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Log Out</button>
-                </form>
-            {% endif %}
-        </nav>
+    <header class="header">
+        <h1 class="title">AtlantaFoodFinder</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="profile-button">
+                <i class="fas fa-user-circle"></i>
+                Profile
+            </a>
+        {% endif %}
     </header>
 
-    <div class="centered-box">
-        {% block back_arrow %}{% endblock %}
-        <div class="box-content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
+    {% block content %}
+    {% endblock %}
 
     {% block extra_js %}{% endblock %}
 </body>
