@@ -282,6 +282,12 @@ async function expandRestaurantCard(card) {
                             <i class="fas fa-directions"></i> Get Directions
                         </a>
                     </div>
+                    <div class="reviews-section">
+                        <h3>Reviews</h3>
+                        <div id="reviews-container">
+                        </div>
+                        ${createReviewForm(placeId)}
+                </div>
                 `;
 
                 if (details.reviews && details.reviews.length > 0) {
@@ -305,6 +311,8 @@ async function expandRestaurantCard(card) {
                 }
 
                 detailsContent.innerHTML = contentHTML;
+                await loadReviews(placeId);
+                setupReviewForm();
             } catch (error) {
                 detailsContent.innerHTML = '<p class="error">Failed to load details. Please try again.</p>';
                 console.error('Error fetching place details:', error);
@@ -429,3 +437,108 @@ function clearMarkers() {
 
 // Fallback: If Google Maps API is loaded after our script
 window.initMap = initMap;
+
+function createReviewForm(placeId) {
+    return `
+        <form id="review-form" data-place-id="${placeId}">
+            <select name="rating" required>
+                <option value="">Select Rating</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+            <textarea name="comment" required placeholder="Write your review here"></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+    `;
+}
+
+async function loadReviews(placeId) {
+    try {
+        const response = await fetch(`/api/get_reviews/?place_id=${placeId}`);
+        const data = await response.json();
+        const reviews = data.reviews;
+
+        if (reviews.length === 0) {
+            document.getElementById('reviews-container').innerHTML = '<p>There are no reviews at the time. You can be the first!</p>';
+        } else {
+            document.getElementById('reviews-container').innerHTML = reviews.map(review => `
+                <div class="review">
+                    <p><strong>${review.user}</strong> rated it ${review.rating} stars</p>
+                    <p>${review.comment}</p>
+                    <small>${new Date(review.created_at).toLocaleString()}</small>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        document.getElementById('reviews-container').innerHTML = '<p>Reviews failed to load. Try again shortly.</p>';
+    }
+}
+
+function setupReviewForm() {
+        if (!isLoggedIn) {
+            document.getElementById('review-form').innerHTML = '<p>Please <a href="/login">log in</a> if you want to submit a review.</p>';
+            return;
+        }
+        if(document.getElementById('review-form')){
+            document.getElementById('review-form').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+
+        document.getElementById('review-form').querySelector('select').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+
+        document.getElementById('review-form').querySelector('textarea').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+        }
+        document.getElementById('review-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fdata = new FormData(document.getElementById('review-form'));
+
+        const reviewData = {
+            place_id: document.getElementById('review-form').dataset.placeId,
+            rating: fdata.get('rating'),
+            comment: fdata.get('comment')
+        };
+        const csrftok = getCookie('csrftoken')
+
+        try {
+            const response = await fetch('/api/create_review/', {
+                method: 'POST',
+                body: JSON.stringify(reviewData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftok
+                }
+            });
+            const data = await response.json();
+            if (data.success) {
+                alert('Review has been submitted!!');
+                document.getElementById('review-form').reset();
+                await loadReviews(document.getElementById('review-form').dataset.placeId);
+            } else {
+                alert('Review not submitted. Try again shortly.');
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again.');
+        }
+    });
+}
+function getCookie(name) {
+    let val = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                val = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return val;
+}
