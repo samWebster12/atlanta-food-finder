@@ -15,6 +15,7 @@
     <button type="submit" class="choice-button" id="login-button">Log In</button>
 </form>
 <p>Don't have an account? <a href="{% url 'signup' %}" class="button">Sign up here</a></p>
+<a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a>
 {% endblock %}
 
 {% block extra_css %}

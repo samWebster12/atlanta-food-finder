@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -195,8 +197,6 @@ async def get_place_details(request):
                 data = await response.json()
                 if data['status'] == 'OK':
                     result = JsonResponse(data['result'])
-                    # if request.user.is_authenticated:
-                    #     result['is_favorite'] = await sync_to_async(Favorite.objects.filter(user=request.user, place_id=place_id).exists)()
                     return result
                 else:
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
@@ -250,3 +250,13 @@ class SignUpView(generic.CreateView):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject.txt'
+    success_message = "We've emailed you instructions for setting up your password, " \
+                      "if an account exists with the email you entered. You should receive the email shortly." \
+                      " If you don't receive an email, " \
+                      "ensure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('index')

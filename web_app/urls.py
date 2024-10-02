@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
-from .views import SignUpView
+from .views import SignUpView, ResetPasswordView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,5 +17,6 @@ urlpatterns = [
     path('api/proxy-photo/', views.proxy_place_photo, name='proxy_place_photo'),
     path('api/get_profile', views.get_profile, name='get_profile'),
     path('map/', views.map_view, name='map'),
-    path('profile/', views.profile, name='profile')
+    path('profile/', views.profile, name='profile'),
+    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
 ]
