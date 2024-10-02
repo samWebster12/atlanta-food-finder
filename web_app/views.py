@@ -37,7 +37,7 @@ def login_view(request):
                 return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = CustomAuthenticationForm()
-    return render(request, 'auth/login.html', {'form': form})
+    return render(request, 'auth2/login.html', {'form': form})
 
 
 @csrf_exempt
@@ -238,7 +238,7 @@ class CustomUserCreationForm(UserCreationForm):
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
-    template_name = 'auth/signup.html'
+    template_name = 'auth2/signup.html'
 
     def form_valid(self, form):
         response = super().form_valid(form)

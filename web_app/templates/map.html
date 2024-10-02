@@ -23,21 +23,22 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1 class="header-title">Atlanta Food Map</h1>
+          <h1 class="header-title">Atlanta Food Map</h1>
+          <nav class="header-nav">
             {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="profile-button">
-                    <i class="fas fa-user-circle"></i>
-                    Profile
-                </a>
+              <a href="{% url 'profile' %}" class="profile-button">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+              </a>
             {% else %}
-                <div class="auth-buttons">
-                    <a href="{% url 'login' %}" class="auth-button">Login</a>
-                    <a href="{% url 'signup' %}" class="auth-button">Sign Up</a>
-                </div>
+              <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="auth-button">Login</a>
+                <a href="{% url 'signup' %}" class="auth-button">Sign Up</a>
+              </div>
             {% endif %}
-            
+          </nav>
         </div>
-    </header>
+      </header>
 
     <main class="main">
         <div class="left-content">

@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'web_app/css/base2.css' %}">
+    <link rel="stylesheet" href="{% static 'web_app/css/auth/login.css' %}">
+</head>
+<body>
+    <div class="wrapper login">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            <div class="input-box">
+                <span class="icon"><i class='bx bx-envelope'></i></span>
+                <input type="text" required>
+                <label>Username</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><i class='bx bx-lock-alt'></i></span>
+                <input type="password" required>
+                <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="login-register">
+                <p>Don't have an account? <a href="/signup" class="register-link">Register</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
