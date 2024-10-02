@@ -22,7 +22,7 @@ import asyncio
 import ssl
 import certifi
 from asgiref.sync import sync_to_async
-from .models import UserPlaces
+from .models import UserPlaces, Review
 
 USE_DUMMY_DATA = False
 
@@ -259,8 +259,6 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         self.object = form.save()
         # Optionally, you can login the user here or not depending on your flow
-        # login(self.request, self.object)
-
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': True})  # Successful signup
 
@@ -271,7 +269,6 @@ class SignUpView(generic.CreateView):
             return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
 
         return super().form_invalid(form)
-
 
 def get_favorite_places(request):
     if not request.user.is_authenticated:
@@ -354,6 +351,48 @@ def profile(request):
 
     return render(request, 'profile.html')
 
+@require_POST
+@login_required
+def create_review(request):
+    try:
+        data = json.loads(request.body)
+        if not all([data.get('place_id'), data.get('rating'), data.get('comment')]):
+            return JsonResponse({'error': 'All fields are not present.'}, status=400)
+
+        review = Review.objects.create(
+            user=request.user,
+            place_id=data.get('place_id'),
+            rating=data.get('rating'),
+            comment=data.get('comment')
+        )
+
+        return JsonResponse({
+            'success': True,
+            'review': {
+                'id': review.id,
+                'user': review.user.username,
+                'rating': review.rating,
+                'comment': review.comment,
+                'created_at': review.created_at.isoformat()
+            }
+        })
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Not a valid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+def get_reviews(request):
+    if not request.GET.get('place_id'):
+        return JsonResponse({'error': 'place_id is missing.'}, status=400)
+    reviews = Review.objects.filter(place_id=request.GET.get('place_id')).order_by('-created_at')
+    review_data = [{
+        'id': review.id,
+        'user': review.user.username,
+        'rating': review.rating,
+        'comment': review.comment,
+        'created_at': review.created_at.isoformat()
+    } for review in reviews]
+    return JsonResponse({'reviews': review_data})
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset.html'

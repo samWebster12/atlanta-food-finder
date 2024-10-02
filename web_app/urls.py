@@ -21,6 +21,8 @@ urlpatterns = [
     path('api/check_favorite', views.check_favorite, name='check_favourite'),
     path('api/get_profile', views.get_profile, name='get_profile'),
     path('api/search/', views.search_restaurants, name='search_restaurants'),
+    path('api/create_review/', views.create_review, name='create_review'),
+    path('api/get_reviews/', views.get_reviews, name='get_reviews'),
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
