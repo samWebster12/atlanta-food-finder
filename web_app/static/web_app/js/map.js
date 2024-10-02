@@ -286,7 +286,7 @@ async function expandRestaurantCard(card) {
                         <h3>Reviews</h3>
                         <div id="reviews-container">
                         </div>
-                        ${createReviewForm(placeId)}
+                        ${isLoggedIn ? createReviewForm(placeId) : '<p>Please <a href="/login">log in</a> if you want to submit a review.</p>'}
                 </div>
                 `;
 
@@ -311,8 +311,10 @@ async function expandRestaurantCard(card) {
                 }
 
                 detailsContent.innerHTML = contentHTML;
+                if (isLoggedIn) {
+                    setupReviewForm();
+                }
                 await loadReviews(placeId);
-                setupReviewForm();
             } catch (error) {
                 detailsContent.innerHTML = '<p class="error">Failed to load details. Please try again.</p>';
                 console.error('Error fetching place details:', error);
