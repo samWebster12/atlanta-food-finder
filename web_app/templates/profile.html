@@ -7,8 +7,8 @@
     <title>User Profile - Atlanta Food Map</title>
     <link rel="stylesheet" href="{% static 'web_app/css/base2.css' %}">
     <link rel="stylesheet" href="{% static 'web_app/css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'web_app/css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'web_app/css/common/restaurant-card.css' %}">
+    <link rel="stylesheet" href="{% static 'web_app/css/profile.css' %}">
     <script src="{% static 'web_app/js/profile.js' %}" defer></script>
 </head>
 <body>
@@ -29,6 +29,12 @@
             <h2 id="profile-name" class="profile-name"></h2>
             <p id="profile-email" class="profile-details"><p>
             <p class="profile-details">Food Enthusiast | Atlanta, GA</p>
+
+           
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn logout-button">Log Out</button>
+            </form>
         </section>
 
         <section class="favorites-section">

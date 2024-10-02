@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="wrapper register">
-        <h2>Signup</h2>
+        <h2>Sign Up</h2>
         <form method="post" action="{% url 'signup' %}">
             {% csrf_token %}
             <div class="input-box">
@@ -47,6 +47,31 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.querySelector('form');
+            signupForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                const formData = new FormData(signupForm);
+                const response = await fetch("{% url 'signup' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = '{% url "login" %}';  // Redirect to login page on success
+                } else {
+                    alert('Error during signup. Please check the form for errors.');  // Show alert on failure
+                }
+            });
+        });
+    </script>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
