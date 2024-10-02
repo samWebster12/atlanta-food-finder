@@ -35,14 +35,14 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                    return JsonResponse({'success': True})
-                return redirect('index')
+                    return JsonResponse({'success': True})  # Successful login
+                return redirect('index')  # Fallback for non-AJAX requests
         else:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({'success': False, 'errors': form.errors})
+                return JsonResponse({'success': False, 'errors': form.errors})  # Failed login
     else:
         form = CustomAuthenticationForm()
-    return render(request, 'auth/login.html', {'form': form})
+    return render(request, 'auth2/login.html', {'form': form})
 
 
 @csrf_exempt
@@ -239,15 +239,26 @@ class CustomUserCreationForm(UserCreationForm):
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'auth/signup.html'
+    success_url = reverse_lazy('login')  # Redirect to login page upon success
+    template_name = 'auth2/signup.html'
 
     def form_valid(self, form):
         response = super().form_valid(form)
         login(self.request, self.object)
         messages.success(self.request, "Account has been created successfully. Welcome!")
         return response
-@login_required
+        self.object = form.save()
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})  # Successful signup
+        
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
+        
+        return super().form_invalid(form)
+    
 def profile(request):
     return render(request, 'profile.html')
 
@@ -255,8 +266,17 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset.html'
     email_template_name = 'users/password_reset_email.html'
     subject_template_name = 'users/password_reset_subject.txt'
-    success_message = "We've emailed you instructions for setting up your password, " \
-                      "if an account exists with the email you entered. You should receive the email shortly." \
-                      " If you don't receive an email, " \
-                      "ensure you've entered the address you registered with, and check your spam folder."
+    success_message = "We've emailed you instructions for setting your password. " \
+                      "If you don't receive an email, ensure you've entered the address you registered with."
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return response
+
+    def form_invalid(self, form):
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors})
+        return super().form_invalid(form)

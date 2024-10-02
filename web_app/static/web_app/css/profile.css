@@ -96,3 +96,23 @@
 .favorites-section::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.logout-button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e60000;
+}
