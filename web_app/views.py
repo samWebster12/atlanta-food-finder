@@ -241,11 +241,10 @@ class SignUpView(generic.CreateView):
     template_name = 'auth/signup.html'
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
-        messages.success(self.request, "Account has been created successfully. Welcome!")
-        return response
         self.object = form.save()
+        # Optionally, you can login the user here or not depending on your flow
+        # login(self.request, self.object) 
+        
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': True})  # Successful signup
         
@@ -256,7 +255,7 @@ class SignUpView(generic.CreateView):
             return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
         
         return super().form_invalid(form)
-    
+            
 def get_favorite_places(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
