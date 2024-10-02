@@ -1,4 +1,4 @@
-test# Atlanta Food Finder
+# Atlanta Food Finder
 
 ## Overview
 
