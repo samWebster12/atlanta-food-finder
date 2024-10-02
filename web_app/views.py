@@ -30,11 +30,11 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                    return JsonResponse({'success': True})
-                return redirect('index')
+                    return JsonResponse({'success': True})  # Successful login
+                return redirect('index')  # Fallback for non-AJAX requests
         else:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({'success': False, 'errors': form.errors})
+                return JsonResponse({'success': False, 'errors': form.errors})  # Failed login
     else:
         form = CustomAuthenticationForm()
     return render(request, 'auth2/login.html', {'form': form})
@@ -237,13 +237,24 @@ class CustomUserCreationForm(UserCreationForm):
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('login')  # Redirect to login page upon success
     template_name = 'auth2/signup.html'
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
-        messages.success(self.request, "Account has been created successfully. Welcome!")
-        return response
+        self.object = form.save()
+        # Optionally, you can login the user here or not depending on your flow
+        # login(self.request, self.object) 
+        
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})  # Successful signup
+        
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
+        
+        return super().form_invalid(form)
+    
 def profile(request):
     return render(request, 'profile.html')
