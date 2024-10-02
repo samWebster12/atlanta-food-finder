@@ -17,6 +17,7 @@ import requests
 import aiohttp
 import asyncio
 from asgiref.sync import sync_to_async
+from .models import UserPlaces
 USE_DUMMY_DATA = False
 
 @csrf_exempt
@@ -164,7 +165,7 @@ def proxy_place_photo(request):
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
     
-def get_favorites(request):
+def add_favorite(request):
     user = request.user
     if not user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
@@ -175,10 +176,11 @@ def get_favorites(request):
 
 def get_profile(request):
     user = request.user
+    user_places, created = UserPlaces.objects.get_or_create(user=request.user)
     if not user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
     
-    return JsonResponse({'username': user.username, 'email': user.email})
+    return JsonResponse({'username': user.username, 'email': user.email, 'favorites': user_places.place_ids})
 
 # Other views
 @require_GET
@@ -255,6 +257,26 @@ class SignUpView(generic.CreateView):
             return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
         
         return super().form_invalid(form)
+    
+def get_favorite_places(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+
+    user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+    return JsonResponse({'place_ids': user_places.place_ids})
+    
+@csrf_exempt
+def add_place_to_favorites(request):
+    if request.method == 'GET':
+        user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+        place_id = request.GET.get('place_id')
+
+        if place_id and place_id not in user_places.place_ids:
+            user_places.place_ids.append(place_id)
+            user_places.save()
+
+        return JsonResponse({'success': True, 'place_ids': user_places.place_ids})
+    return JsonResponse({'success': False}, status=400)
     
 def profile(request):
     return render(request, 'profile.html')
