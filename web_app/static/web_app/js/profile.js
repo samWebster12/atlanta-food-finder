@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    initFavorites();
+    // initFavorites();
     initProfile();
 });
 
@@ -13,6 +13,31 @@ async function initProfile() {
 
         profileName.textContent = data.username;
         profileEmail.textContent = data.email;
+
+        favorites = data.favorites;
+
+        const favoritesList = document.querySelector('#favorites-list');
+
+        // Clear any existing content
+        favoritesList.innerHTML = '';
+
+        // Check if favorites is an array and has items
+        if (Array.isArray(favorites) && favorites.length > 0) {
+            // Use Promise.all to fetch all favorite details concurrently
+            const favoriteDetails = await Promise.all(
+                favorites.map(favorite => fetch(`/api/place-details/?place_id=${favorite}`).then(res => res.json()))
+            );
+            
+            favoriteDetails.forEach(detail => {
+                console.log(detail);
+                const card = createRestaurantCard(detail);
+                favoritesList.appendChild(card);
+            });
+        } else {
+            favoritesList.innerHTML = '<p>No favorites found.</p>';
+        }
+        
+
     } catch (error) {
         console.error('Error fetching profile:', error);
         document.querySelector('#profile').innerHTML = '<p>Error loading profile. Please try again later.</p>';

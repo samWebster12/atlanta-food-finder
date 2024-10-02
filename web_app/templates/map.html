@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk" defer></script>
     <script src="{% static 'web_app/js/map.js' %}" defer></script>
+
+    <script>
+        var isLoggedIn = {{ is_logged_in|yesno:"true,false" }};
+        console.log("IS LOGGED IN: " + isLoggedIn);
+    </script>
 </head>
 <body>
     <header class="header">
