@@ -6,7 +6,6 @@ let userLocation = {
     lat: 33.7490,
     lng: -84.3880
 };
-let isLoggedIn = false;
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -122,10 +121,24 @@ async function getRestaurants(query, distanceFilter, ratingsFilter, searchBy) {
     }
 }
 
-function createRestaurantCard(restaurant) {
+async function createRestaurantCard(restaurant) {
     const starRating = '★'.repeat(Math.round(restaurant.rating)) + '☆'.repeat(5 - Math.round(restaurant.rating));
     const priceLevel = '$'.repeat(restaurant.price_level || 0);
     
+    let bookmarkHTML = '';
+    console.log("IS LOGGED IN: " + isLoggedIn);
+
+    // Check if the restaurant is a favorite
+    let isFavorite = false;
+    if (isLoggedIn) {
+        isFavorite = await checkFavorite(restaurant.place_id);
+        bookmarkHTML = `
+            <div class="bookmark" onclick="toggleBookmark(this)">
+                <i class="${isFavorite ? 'fas' : 'far'} fa-bookmark"></i>
+            </div>
+        `;
+    }
+
     const cardHTML = `
         <div class="restaurant-card" data-place-id="${restaurant.place_id}">
             <div class="restaurant-summary">
@@ -143,6 +156,7 @@ function createRestaurantCard(restaurant) {
                         ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
                     <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
                 </div>
+                ${bookmarkHTML}  <!-- Conditionally display the bookmark if logged in -->
             </div>
             <div class="restaurant-details" style="display: none;">
                 <div class="details-content"></div>
@@ -152,6 +166,84 @@ function createRestaurantCard(restaurant) {
 
     return cardHTML;
 }
+
+function toggleBookmark(bookmarkElement) {
+    const icon = bookmarkElement.querySelector('i');
+    const card = bookmarkElement.closest('.restaurant-card'); // Find the closest parent card
+    const placeId = card.getAttribute('data-place-id'); // Get the place_id from the card
+
+    if (icon.classList.contains('far')) {
+        icon.classList.remove('far', 'fa-bookmark');
+        icon.classList.add('fas', 'fa-bookmark');
+
+        // Send a request to the backend to add this restaurant as a favorite
+        addFavorite(placeId);
+    } else {
+        icon.classList.remove('fas', 'fa-bookmark');
+        icon.classList.add('far', 'fa-bookmark');
+        
+        // Optionally: You can implement a "remove from favorites" function here
+        removeFavorite(placeId);
+    }
+}
+
+async function checkFavorite(placeId) {
+    try {
+        const response = await fetch(`/api/check_favorite?place_id=${placeId}`, {
+            method: 'GET',
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            return data.is_favorite;
+        } else {
+            console.error('Failed to check favorite:', data.error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error checking favorite:', error);
+        return false;
+    }
+}
+
+async function addFavorite(placeId) {
+    try {
+        const response = await fetch(`/api/add_favorite?place_id=${placeId}`, {
+            method: 'GET',  // Using GET as per your request (POST is more conventional for adding data)
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            console.log(`Added place ID ${placeId} to favorites.`);
+        } else {
+            console.error('Failed to add favorite:', data);
+            alert('Failed to add favorite. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error adding favorite:', error);
+        alert('Error adding favorite. Please try again.');
+    }
+}
+
+async function removeFavorite(placeId) {
+    try {
+        const response = await fetch(`/api/remove_favorite?place_id=${placeId}`, {
+            method: 'GET',  // Using GET for simplicity (but POST or DELETE is more conventional for removal)
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            console.log(`Removed place ID ${placeId} from favorites.`);
+        } else {
+            console.error('Failed to remove favorite:', data.message || data.error);
+            alert(data.message || 'Failed to remove favorite. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error removing favorite:', error);
+        alert('Error removing favorite. Please try again.');
+    }
+}
+
 
 async function expandRestaurantCard(card) {
     const placeId = card.dataset.placeId;
@@ -225,17 +317,27 @@ async function expandRestaurantCard(card) {
     }
 }
 
-function displayRestaurants(restaurants) {
+async function displayRestaurants(restaurants) {
     const resultsContainer = document.querySelector('.results');
     resultsContainer.innerHTML = '<h1 class="results-header">Results</h1>'; // Clear previous results
 
-    restaurants.forEach(restaurant => {
+    // Create an array of promises for each restaurant card
+    const restaurantCardPromises = restaurants.map(async restaurant => {
         const imageUrl = restaurant.photos && restaurant.photos[0]
-        ? `/api/proxy-photo/?photo_reference=${restaurant.photos[0].photo_reference}`
-        : '{% static "web_app/images/pasta_placeholder.jpg" %}';
+            ? `/api/proxy-photo/?photo_reference=${restaurant.photos[0].photo_reference}`
+            : '{% static "web_app/images/pasta_placeholder.jpg" %}';
 
-        const card = createRestaurantCard(restaurant, imageUrl);
-        addMarker(restaurant, imageUrl);
+        // Wait for the async createRestaurantCard function
+        const card = await createRestaurantCard(restaurant);
+        addMarker(restaurant, imageUrl);  // Keep this sync as markers can be added without waiting
+        return card;  // Return the created card
+    });
+
+    // Wait for all restaurant cards to be created
+    const restaurantCards = await Promise.all(restaurantCardPromises);
+
+    // Insert each card into the DOM
+    restaurantCards.forEach(card => {
         resultsContainer.insertAdjacentHTML('beforeend', card);
     });
 
