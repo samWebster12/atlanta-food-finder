@@ -23,7 +23,9 @@ import ssl
 import certifi
 from asgiref.sync import sync_to_async
 from .models import UserPlaces
+
 USE_DUMMY_DATA = False
+
 
 @csrf_exempt
 def login_view(request):
@@ -55,11 +57,14 @@ def logout_view(request):
 def ask_account(request):
     return render(request, 'auth/account.html')
 
+
 def create_account(request):
     return render(request, 'auth/acc-create.html')
 
+
 def back_home(request):
     return render(request, 'index.html')
+
 
 @require_GET
 async def search_restaurants(request):
@@ -79,16 +84,17 @@ async def search_restaurants(request):
             async with session.get(url, params=params) as response:
                 data = await response.json()
                 results = data.get('results', [])
-        
+
         return JsonResponse({'restaurants': results})
     else:
         search_by = request.GET.get('search_by', '')
         print(f"Search by: {search_by}")
         file_path = "dummy_maps_results.json"
-        
+
         results = await sync_to_async(read_json_file)(file_path)
 
         return JsonResponse({'restaurants': results})
+
 
 async def create_search_params(query, search_by, distance_filter):
     params = {
@@ -120,6 +126,7 @@ async def create_search_params(query, search_by, distance_filter):
 
     return params
 
+
 async def get_coordinates(location):
     print(f"Getting coordinates for location: {location}")
     base_url = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -133,15 +140,15 @@ async def get_coordinates(location):
         try:
             async with session.get(base_url, params=params) as response:
                 data = await response.json()
-            
+
             if data["status"] == "OK" and data["results"]:
                 result = data["results"][0]
                 location = result["geometry"]["location"]
                 lat, lng = location["lat"], location["lng"]
-                
+
                 print(f"Found coordinates for {location}: {lat}, {lng}")
                 print(f"Formatted address: {result.get('formatted_address')}")
-                
+
                 return f"{lat},{lng}"
             else:
                 print(f"Geocoding failed. Status: {data.get('status')}")
@@ -153,33 +160,37 @@ async def get_coordinates(location):
             print(f"Unexpected response structure: {e}")
             return None
 
+
 def read_json_file(file_path):
     with open(file_path, 'r') as json_file:
         return json.load(json_file)
-    
+
+
 def proxy_place_photo(request):
     photo_reference = request.GET.get('photo_reference')
     max_width = request.GET.get('max_width', 400)
-    
+
     if not photo_reference:
         return HttpResponse('No photo reference provided', status=400)
-    
+
     url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth={max_width}&photoreference={photo_reference}&key={settings.GOOGLE_MAPS_API_KEY}"
-    
+
     response = requests.get(url, verify=False)
-    
+
     if response.status_code == 200:
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
+
 
 def get_profile(request):
     user = request.user
     user_places, created = UserPlaces.objects.get_or_create(user=request.user)
     if not user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
-    
+
     return JsonResponse({'username': user.username, 'email': user.email, 'favorites': user_places.place_ids})
+
 
 # Other views
 @require_GET
@@ -204,13 +215,16 @@ async def get_place_details(request):
                     return JsonResponse({'error': 'Unable to fetch place details'}, status=400)
             else:
                 return JsonResponse({'error': 'API request failed'}, status=response.status)
-            
+
+
 def create_user(username, email, password):
     user = User.objects.create_user(username=username, email=email, password=password)
     return user
 
+
 def get_all_users():
     return User.objects.all()
+
 
 def get_user_by_username(username):
     try:
@@ -218,12 +232,14 @@ def get_user_by_username(username):
     except User.DoesNotExist:
         return None
 
+
 def map_view(request):
     return render(request, 'map.html', {'is_logged_in': request.user.is_authenticated})
 
 
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True, label = 'Email')
+    email = forms.EmailField(required=True, label='Email')
+
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
@@ -241,29 +257,30 @@ class SignUpView(generic.CreateView):
     template_name = 'auth/signup.html'
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
-        messages.success(self.request, "Account has been created successfully. Welcome!")
-        return response
         self.object = form.save()
+        # Optionally, you can login the user here or not depending on your flow
+        # login(self.request, self.object)
+
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': True})  # Successful signup
-        
+
         return super().form_valid(form)
 
     def form_invalid(self, form):
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors})  # Failed signup
-        
+
         return super().form_invalid(form)
-    
+
+
 def get_favorite_places(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
 
     user_places, created = UserPlaces.objects.get_or_create(user=request.user)
     return JsonResponse({'place_ids': user_places.place_ids})
-    
+
+
 @csrf_exempt
 def add_place_to_favorites(request):
     if request.method == 'GET':
@@ -276,6 +293,7 @@ def add_place_to_favorites(request):
 
         return JsonResponse({'success': True, 'place_ids': user_places.place_ids})
     return JsonResponse({'success': False}, status=400)
+
 
 @csrf_exempt
 def remove_place_from_favorites(request):
@@ -295,12 +313,14 @@ def remove_place_from_favorites(request):
         if place_id in user_places.place_ids:
             user_places.place_ids.remove(place_id)
             user_places.save()
-            return JsonResponse({'success': True, 'message': f'Removed {place_id} from favorites', 'place_ids': user_places.place_ids})
-        
+            return JsonResponse(
+                {'success': True, 'message': f'Removed {place_id} from favorites', 'place_ids': user_places.place_ids})
+
         # If the place_id is not found in the favorites
         return JsonResponse({'success': False, 'message': 'Place not found in favorites'}, status=404)
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
+
 
 @csrf_exempt
 def check_favorite(request):
@@ -322,17 +342,18 @@ def check_favorite(request):
         if place_id in user_places.place_ids:
             return JsonResponse({'success': True, 'is_favorite': True, 'message': f'Place {place_id} is a favorite'})
         else:
-            return JsonResponse({'success': True, 'is_favorite': False, 'message': f'Place {place_id} is not a favorite'})
+            return JsonResponse(
+                {'success': True, 'is_favorite': False, 'message': f'Place {place_id} is not a favorite'})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
 
 
-    
 def profile(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
-    
+
     return render(request, 'profile.html')
+
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset.html'
