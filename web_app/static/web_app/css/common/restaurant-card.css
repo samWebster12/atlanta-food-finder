@@ -29,6 +29,7 @@
 .restaurant-info {
     flex: 2;
     padding: 20px;
+    text-align: left;
 }
 
 .restaurant-name {
