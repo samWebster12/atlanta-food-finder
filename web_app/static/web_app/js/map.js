@@ -143,6 +143,9 @@ function createRestaurantCard(restaurant) {
                         ${restaurant.opening_hours && restaurant.opening_hours.open_now ? 'Open' : 'Closed'}</span></p>
                     <p class="restaurant-type">${restaurant.types[0].replace(/_/g, ' ').charAt(0).toUpperCase() + restaurant.types[0].replace(/_/g, ' ').slice(1)}</p>
                 </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="far fa-bookmark"></i>
+                </div>
             </div>
             <div class="restaurant-details" style="display: none;">
                 <div class="details-content"></div>
@@ -151,6 +154,17 @@ function createRestaurantCard(restaurant) {
     `;
 
     return cardHTML;
+}
+
+function toggleBookmark(bookmarkElement) {
+    const icon = bookmarkElement.querySelector('i');
+    if (icon.classList.contains('far')) {
+        icon.classList.remove('far', 'fa-bookmark');
+        icon.classList.add('fas', 'fa-bookmark');
+    } else {
+        icon.classList.remove('fas', 'fa-bookmark');
+        icon.classList.add('far', 'fa-bookmark');
+    }
 }
 
 async function expandRestaurantCard(card) {
