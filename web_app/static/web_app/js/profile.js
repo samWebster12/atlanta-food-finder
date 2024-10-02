@@ -25,7 +25,7 @@ async function initProfile() {
         if (Array.isArray(favorites) && favorites.length > 0) {
             // Use Promise.all to fetch all favorite details concurrently
             const favoriteDetails = await Promise.all(
-                favorites.map(favorite => fetch(`/api/place-details/?place_id=${favorite.place_id}`).then(res => res.json()))
+                favorites.map(favorite => fetch(`/api/place-details/?place_id=${favorite}`).then(res => res.json()))
             );
             
             favoriteDetails.forEach(detail => {
