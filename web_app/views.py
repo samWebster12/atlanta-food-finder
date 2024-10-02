@@ -17,6 +17,7 @@ import requests
 import aiohttp
 import asyncio
 from asgiref.sync import sync_to_async
+from .models import UserPlaces
 USE_DUMMY_DATA = False
 
 @csrf_exempt
@@ -163,22 +164,14 @@ def proxy_place_photo(request):
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse('Failed to fetch image', status=response.status_code)
-    
-def get_favorites(request):
-    user = request.user
-    if not user.is_authenticated:
-        return JsonResponse({'error': 'User is not authenticated'}, status=401)
-
-    username = request.user.username
-
-    return JsonResponse({"favorites": [{"place_id": "ChIJaU_5DHoE9YgRZ6C9Mxbyftk"}]})
 
 def get_profile(request):
     user = request.user
+    user_places, created = UserPlaces.objects.get_or_create(user=request.user)
     if not user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
     
-    return JsonResponse({'username': user.username, 'email': user.email})
+    return JsonResponse({'username': user.username, 'email': user.email, 'favorites': user_places.place_ids})
 
 # Other views
 @require_GET
@@ -214,12 +207,8 @@ def get_user_by_username(username):
     except User.DoesNotExist:
         return None
 
-# Synchronous views
-def index(request):
-    return render(request, 'index.html')
-
 def map_view(request):
-    return render(request, 'map.html')
+    return render(request, 'map.html', {'is_logged_in': request.user.is_authenticated})
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -256,5 +245,79 @@ class SignUpView(generic.CreateView):
         
         return super().form_invalid(form)
     
+def get_favorite_places(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+
+    user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+    return JsonResponse({'place_ids': user_places.place_ids})
+    
+@csrf_exempt
+def add_place_to_favorites(request):
+    if request.method == 'GET':
+        user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+        place_id = request.GET.get('place_id')
+
+        if place_id and place_id not in user_places.place_ids:
+            user_places.place_ids.append(place_id)
+            user_places.save()
+
+        return JsonResponse({'success': True, 'place_ids': user_places.place_ids})
+    return JsonResponse({'success': False}, status=400)
+
+@csrf_exempt
+def remove_place_from_favorites(request):
+    if request.method == 'GET':
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return JsonResponse({'success': False, 'error': 'User is not authenticated'}, status=401)
+
+        # Fetch or create UserPlaces entry for the current user
+        user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+        place_id = request.GET.get('place_id')
+
+        if not place_id:
+            return JsonResponse({'success': False, 'error': 'No place ID provided'}, status=400)
+
+        # Remove the place_id if it exists in the user's favorites
+        if place_id in user_places.place_ids:
+            user_places.place_ids.remove(place_id)
+            user_places.save()
+            return JsonResponse({'success': True, 'message': f'Removed {place_id} from favorites', 'place_ids': user_places.place_ids})
+        
+        # If the place_id is not found in the favorites
+        return JsonResponse({'success': False, 'message': 'Place not found in favorites'}, status=404)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
+
+@csrf_exempt
+def check_favorite(request):
+    if request.method == 'GET':
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return JsonResponse({'success': False, 'error': 'User is not authenticated'}, status=401)
+
+        # Get the place_id from the request
+        place_id = request.GET.get('place_id')
+
+        if not place_id:
+            return JsonResponse({'success': False, 'error': 'No place ID provided'}, status=400)
+
+        # Fetch or create UserPlaces entry for the current user
+        user_places, created = UserPlaces.objects.get_or_create(user=request.user)
+
+        # Check if the place_id is in the user's favorites
+        if place_id in user_places.place_ids:
+            return JsonResponse({'success': True, 'is_favorite': True, 'message': f'Place {place_id} is a favorite'})
+        else:
+            return JsonResponse({'success': True, 'is_favorite': False, 'message': f'Place {place_id} is not a favorite'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
+
+
+    
 def profile(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+    
     return render(request, 'profile.html')

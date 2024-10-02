@@ -15,7 +15,9 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('api/place-details/', views.get_place_details, name='place_details'),
     path('api/proxy-photo/', views.proxy_place_photo, name='proxy_place_photo'),
-    path('api/favorites', views.get_favorites, name='favorites'),
+    path('api/add_favorite', views.add_place_to_favorites, name=''),
+    path('api/remove_favorite', views.remove_place_from_favorites, name=''),
+    path('api/check_favorite', views.check_favorite, name='check_favourite'),
     path('api/get_profile', views.get_profile, name='get_profile'),
     path('api/search/', views.search_restaurants, name='search_restaurants'),
 ]
