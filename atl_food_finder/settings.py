@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 import ssl
 import certifi
+from dotenv import load_dotenv
+load_dotenv()
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -27,8 +29,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'anirudhr2005@gmail.com'
-EMAIL_HOST_PASSWORD = 'ldrx hybs dfwk llhd'
+EMAIL_HOST_USER = os.getenv("EMAIL_USERNAME")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -140,6 +142,6 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GOOGLE_MAPS_API_KEY = "AIzaSyDRbtKq5nh6cpCD_HVe09TqO7nuZEttfUk"
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 AUTH_USER_MODEL = 'auth.User'
