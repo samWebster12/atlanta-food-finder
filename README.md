@@ -16,25 +16,25 @@ Atlanta Food Finder is a web application designed to help users discover and exp
 - **Backend**: Django (Python web framework)
 - **Frontend**: HTML, CSS, JavaScript
 - **Database**: SQLLite
-- **Map Integration**: Google Maps API
+- **Map Integration**: Spotify API for fetching user listening data
 - **Authentication**: Django's built-in authentication system
 
 ## API Integration
 
-This project uses the Google Maps API for map functionality and location services. You'll need to obtain an API key from the Google Cloud Console and add it to your environment variables.
+This project uses the Spotify API to access user listening data securely. API keys and secrets are stored in environment variables for enhanced security.
 
 ## Contributing
 
-We welcome contributions to the Atlanta Food Finder project. Please read our CONTRIBUTING.md file for guidelines on how to make contributions.
+-
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+-
 
 ## Contact
 
-For any queries or support, please contact us at support@atlantafoodfinder.com.
+-
 
 ---
 
-Thank you for your interest in the Atlanta Food Finder project. We hope this app helps you discover the amazing food scene in Atlanta!
+Thank you for your interest in the Spotify Wrapper project. We hope this app helps you discover the amazing food scene in Atlanta!
